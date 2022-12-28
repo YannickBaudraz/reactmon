@@ -1,0 +1,12 @@
+@import 'primereact/resources/primereact.min';
+@import 'primereact/resources/themes/lara-light-indigo/theme';
+@import 'primeicons/primeicons';
+@import 'primeflex/primeflex.min';
+
+* {
+  font-family: var(--font-family);
+}
+
+body {
+  @extend .p-reset;
+}
