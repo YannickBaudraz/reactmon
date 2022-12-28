@@ -24,10 +24,6 @@ export default function NavBar({onSearch}: NavBarProps) {
   />;
 
   return (
-      <div>
-        <div className="card">
-          <Menubar start={start} end={end}/>
-        </div>
-      </div>
+      <Menubar start={start} end={end} className="px-3"/>
   );
 }
