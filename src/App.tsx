@@ -1,11 +1,13 @@
 import React from 'react';
 import Layout from './views/Layout';
-import Pokemons from './views/Pokemons';
+import AllPokemon from './views/AllPokemon';
 
 function App() {
-  return <Layout>
-    <Pokemons/>
-  </Layout>;
+  return (
+      <Layout>
+        <AllPokemon/>
+      </Layout>
+  );
 }
 
 export default App;

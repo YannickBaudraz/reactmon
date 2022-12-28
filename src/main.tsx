@@ -4,6 +4,7 @@ import App from './App';
 import {ReactQueryDevtools} from '@tanstack/react-query-devtools';
 import {QueryClient, QueryClientProvider} from '@tanstack/react-query';
 import './index.scss';
+import './extensions';
 
 const queryClient = new QueryClient();
 
