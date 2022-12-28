@@ -1,20 +1,14 @@
 import React from 'react';
 import {InputText} from 'primereact/inputtext';
 import {Menubar} from 'primereact/menubar';
+import {Image} from 'primereact/image';
 
 export interface NavBarProps {
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export default function NavBar({onSearch}: NavBarProps) {
-  const start = <>
-    <a href="/">
-      <img alt="logo"
-           src="public/pokedex-logo.png"
-           height="40"
-           className="mr-2"/>
-    </a>
-  </>;
+  const start = <a href="/"><Image src="/pokedex-logo.png" alt="Logo" width="37"/></a>;
 
   const end = <InputText
       placeholder="Search"
@@ -23,7 +17,5 @@ export default function NavBar({onSearch}: NavBarProps) {
       onChange={onSearch}
   />;
 
-  return (
-      <Menubar start={start} end={end} className="px-3"/>
-  );
+  return <Menubar start={start} end={end} className="px-3"/>;
 }

@@ -20,7 +20,7 @@ export default defineConfig(({mode}) => {
         devOptions: {
           enabled: true
         },
-        includeAssets: ['favicon.ico', 'vite.svg'],
+        includeAssets: ['favicon.ico', 'vite.svg', 'pokedex-logo.png'],
         manifest: {
           name: env.VITE_APP_NAME,
           short_name: env.VITE_APP_NAME,
