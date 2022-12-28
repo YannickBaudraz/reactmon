@@ -10,7 +10,7 @@ export default function NavBar({onSearch}: NavBarProps) {
   const start = <>
     <a href="/">
       <img alt="logo"
-           src="public/vite.svg"
+           src="public/pokedex-logo.png"
            height="40"
            className="mr-2"/>
     </a>
