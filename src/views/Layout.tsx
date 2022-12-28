@@ -1,10 +1,15 @@
 import React from 'react';
-import NavBar from '../components/Navbar';
+import NavBar, {NavBarProps} from '../components/Navbar';
 
-export default function Layout({children}: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  navBarProps: NavBarProps;
+}
+
+export default function Layout({navBarProps, children}: LayoutProps) {
   return (
       <>
-        <NavBar/>
+        <NavBar onSearch={navBarProps.onSearch}/>
 
         <div className="px-2">
           <div className="surface-0">

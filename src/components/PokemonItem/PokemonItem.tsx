@@ -28,7 +28,7 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
       <Card
           title={pokemon.name.capitalize()}
           subTitle={pokemonId}
-          className="pokemon-item m-1 col"
+          className="pokemon-item m-1 p-2 col max-w-fit"
           onMouseOver={onMouseOver}
           onMouseOut={onMouseOut}
       >

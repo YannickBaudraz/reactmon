@@ -1,7 +1,12 @@
 import PokemonList from '../components/PokemonList';
+import {IPokemonBulkResult} from '../types/poke-api';
 
-export default function AllPokemon() {
+interface AllPokemonProps {
+  pokemons: IPokemonBulkResult[];
+}
+
+export default function AllPokemon({pokemons}: AllPokemonProps) {
   return (
-    <PokemonList />
+    <PokemonList pokemons={pokemons} />
   );
 }

@@ -2,7 +2,11 @@ import React from 'react';
 import {InputText} from 'primereact/inputtext';
 import {Menubar} from 'primereact/menubar';
 
-export default function NavBar() {
+export interface NavBarProps {
+  onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+export default function NavBar({onSearch}: NavBarProps) {
   const start = <>
     <a href="/">
       <img alt="logo"
@@ -12,7 +16,12 @@ export default function NavBar() {
     </a>
   </>;
 
-  const end = <InputText placeholder="Search" type="text"/>;
+  const end = <InputText
+      placeholder="Search"
+      type="search"
+      className="p-inputtext-sm"
+      onChange={onSearch}
+  />;
 
   return (
       <div>
