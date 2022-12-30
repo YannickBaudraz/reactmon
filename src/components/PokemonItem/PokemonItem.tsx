@@ -1,7 +1,6 @@
 import {Card} from 'primereact/card';
-import React, {useCallback, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import './PokemonItem.scss';
-import {DivMouseEvent} from '../../types/events';
 import {IPokemonBulkResult} from '../../types/poke-api';
 import {motion} from 'framer-motion';
 import anime from 'animejs';
@@ -19,24 +18,17 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
   const itemImgRef = useRef<HTMLImageElement>(null);
   const [imgSrc, setImgSrc] = useState(placeholderSrc);
 
-  const toggleClickable = useCallback(({currentTarget: el}: DivMouseEvent) => {
-    if (el.style.cursor !== 'pointer') {
-      el.style.cursor = 'pointer';
-      el.classList.add('shadow-5');
-    } else {
-      el.style.cursor = 'default';
-      el.classList.remove('shadow-5');
-    }
-  }, [pokemon]);
-
   return (
-      <a href="#" className="p-reset">
+      <motion.div
+          whileHover={{
+            scale: 1.05,
+            boxShadow: '3px 3px 10px 5px rgba(0,0,0,0.07)'
+          }}
+      >
         <Card
             title={pokemon.name.capitalize()}
             subTitle={pokemonId}
             className="pokemon-item col max-w-fit"
-            onMouseOver={toggleClickable}
-            onMouseOut={toggleClickable}
         >
           <motion.img
               ref={itemImgRef}
@@ -47,6 +39,7 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
               viewport={{once: true}}
               onViewportEnter={e => {
                 if (!e) return;
+
                 itemImgRef.current!.onload = null;
 
                 const duration = 500;
@@ -54,19 +47,18 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
                   targets: itemImgRef.current,
                   duration: duration,
                   easing: 'easeInOutSine'
-                });
-                timeline.add({
+                }).add({
                   opacity: 0,
                   duration: duration,
                   complete: () => {
-                    timeline.pause();
                     setImgSrc(spriteSrc);
+                    timeline.pause();
                   }
-                });
-                timeline.add({
+                }).add({
                   delay: duration / 4,
                   opacity: 1
                 });
+
                 itemImgRef.current!.onload = () => {
                   if (itemImgRef.current!.src === spriteSrc) {
                     timeline.play();
@@ -75,7 +67,7 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
               }}
           />
         </Card>
-      </a>
+      </motion.div>
   );
 }
 

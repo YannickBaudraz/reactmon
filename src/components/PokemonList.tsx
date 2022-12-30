@@ -13,10 +13,12 @@ export default function PokemonList({pokemons}: PokemonListProps) {
 
         <div className="grid mx-1 lg:mx-2 gap-3 lg:gap-5 justify-content-center">
           {pokemons.map((pokemon: IPokemonBulkResult) =>
-              <PokemonItem
-                  pokemon={pokemon}
-                  key={pokemon.name}
-              />
+              <a href="#" className="p-reset">
+                <PokemonItem
+                    pokemon={pokemon}
+                    key={pokemon.name}
+                />
+              </a>
           )}
         </div>
       </>
