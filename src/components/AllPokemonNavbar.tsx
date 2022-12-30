@@ -8,7 +8,7 @@ export interface NavBarProps {
 }
 
 export default function AllPokemonNavbar({onSearch}: NavBarProps) {
-  return <Menubar className="px-3" start={<NavBarStart/>} end={<NavBarEnd onSearch={onSearch}/>}/>;
+  return <Menubar className="px-3 h-4rem" start={<NavBarStart/>} end={<NavBarEnd onSearch={onSearch}/>}/>;
 }
 
 function NavBarStart() {
