@@ -7,7 +7,7 @@ export interface NavBarProps {
   onSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function NavBar({onSearch}: NavBarProps) {
+export default function AllPokemonNavbar({onSearch}: NavBarProps) {
   return <Menubar className="px-3" start={<NavBarStart/>} end={<NavBarEnd onSearch={onSearch}/>}/>;
 }
 

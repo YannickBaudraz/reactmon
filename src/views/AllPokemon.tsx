@@ -1,12 +1,56 @@
 import PokemonList from '../components/PokemonList';
 import {IPokemonBulkResult} from '../types/poke-api';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {useQuery} from '@tanstack/react-query';
+import {pokemonListQuery} from '../queries/pokemon-queries';
+import {Messages} from 'primereact/messages';
+import {ProgressSpinner} from 'primereact/progressspinner';
+import AllPokemonNavBar from '../components/AllPokemonNavbar';
 
-interface AllPokemonProps {
-  pokemons: IPokemonBulkResult[];
-}
+export default function AllPokemon() {
+  const [initialPokemons, setInitialPokemons] = useState<IPokemonBulkResult[]>([]);
+  const [pokemons, setPokemons] = useState<IPokemonBulkResult[]>([]);
+  const {isLoading, isError, data, error} = useQuery(pokemonListQuery);
+  const messages = useRef<Messages>(null);
+  let content;
 
-export default function AllPokemon({pokemons}: AllPokemonProps) {
+  useEffect(() => {
+    messages.current?.show({
+      severity: 'error', sticky: true, detail: (error as Error)?.message
+    });
+    if (data) {
+      setInitialPokemons(data.results);
+      setPokemons(data.results);
+    }
+  }, [error, data, isLoading, isError]);
+
+  if (isLoading) {
+    content = <div className="flex justify-content-center"><ProgressSpinner/></div>;
+  } else if (isError) {
+    content = <div className="grid">
+      <Messages ref={messages} className="col-10 col-offset-1"/>
+    </div>;
+  } else {
+    content = <PokemonList pokemons={pokemons}/>;
+  }
+
+  const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (initialPokemons) {
+      const searchedValue = e.target.value.toLowerCase();
+      const filteredPokemons = initialPokemons.filter(p => p.name.includes(searchedValue));
+      setPokemons(filteredPokemons);
+    }
+  }, [initialPokemons, pokemons]);
+
   return (
-    <PokemonList pokemons={pokemons} />
+      <>
+        <AllPokemonNavBar onSearch={onSearch}/>
+
+        <div className="px-2">
+          <div className="surface-0">
+            {content}
+          </div>
+        </div>
+      </>
   );
 }
