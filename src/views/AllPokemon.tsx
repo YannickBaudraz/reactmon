@@ -46,10 +46,8 @@ export default function AllPokemon() {
       <>
         <AllPokemonNavBar onSearch={onSearch}/>
 
-        <div className="px-2">
-          <div className="surface-0">
-            {content}
-          </div>
+        <div className="px-5">
+          {content}
         </div>
       </>
   );

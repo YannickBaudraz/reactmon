@@ -11,7 +11,7 @@ export default function PokemonList({pokemons}: PokemonListProps) {
       <>
         <h1>Pokemons</h1>
 
-        <div className="grid px-2 justify-content-center">
+        <div className="grid mx-1 lg:mx-2 gap-3 lg:gap-5 justify-content-center">
           {pokemons.map((pokemon: IPokemonBulkResult) =>
               <PokemonItem
                   pokemon={pokemon}
