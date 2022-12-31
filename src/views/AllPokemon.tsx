@@ -4,15 +4,14 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonListQuery} from '../queries/pokemon-queries';
 import {Messages} from 'primereact/messages';
-import {ProgressSpinner} from 'primereact/progressspinner';
 import AllPokemonNavBar from '../components/AllPokemonNavbar';
+import Loader from '../components/Loader';
 
 export default function AllPokemon() {
   const [initialPokemons, setInitialPokemons] = useState<ApiNamedResource[]>([]);
   const [pokemons, setPokemons] = useState<ApiNamedResource[]>([]);
   const {isLoading, isError, data, error} = useQuery(pokemonListQuery);
   const messages = useRef<Messages>(null);
-  let content;
 
   useEffect(() => {
     messages.current?.show({
@@ -24,16 +23,6 @@ export default function AllPokemon() {
     }
   }, [error, data, isLoading, isError]);
 
-  if (isLoading) {
-    content = <div className="flex justify-content-center"><ProgressSpinner/></div>;
-  } else if (isError) {
-    content = <div className="grid">
-      <Messages ref={messages} className="col-10 col-offset-1"/>
-    </div>;
-  } else {
-    content = <PokemonList pokemons={pokemons}/>;
-  }
-
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (initialPokemons) {
       const searchedValue = e.target.value.toLowerCase();
@@ -41,6 +30,19 @@ export default function AllPokemon() {
       setPokemons(filteredPokemons);
     }
   }, [initialPokemons, pokemons]);
+
+  const content = (() => {
+    if (isLoading) return <Loader/>;
+
+    if (isError)
+      return (
+          <div className="grid">
+            <Messages ref={messages} className="col-10 col-offset-1"/>
+          </div>
+      );
+
+    return <PokemonList pokemons={pokemons}/>;
+  })();
 
   return (
       <>

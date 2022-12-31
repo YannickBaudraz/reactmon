@@ -1,6 +1,6 @@
 import {RouteObject} from 'react-router-dom';
 import AllPokemon from '../views/AllPokemon';
-import PokemonDetail from '../views/PokemonDetail';
+import PokemonDetails from '../views/PokemonDetails';
 
 export const routes: RouteObject[] = [
   {
@@ -9,6 +9,6 @@ export const routes: RouteObject[] = [
   },
   {
     path: '/pokemon/:id',
-    element: <PokemonDetail />
+    element: <PokemonDetails />
   }
 ];

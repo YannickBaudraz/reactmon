@@ -6,7 +6,7 @@ interface NavBarProps {
   color: string;
 }
 
-export default function PokemonDetailNavBar({color}: NavBarProps) {
+export default function PokemonDetailsNavBar({color}: NavBarProps) {
   return (
       <Menubar
           className="px-3 h-4rem"
