@@ -22,7 +22,7 @@ export default function PokemonDetailsNavBar({color}: NavBarProps) {
 
 function NavBarStart() {
   return (
-      <Link to="/">
+      <Link className="p-reset" to="/">
         <Button
             label="Back"
             icon="pi pi-arrow-left"
