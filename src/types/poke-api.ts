@@ -1,9 +1,11 @@
-export interface PokeApiResourceResponse<T> {
+export interface ApiResourceList {
   count: number;
   next: string;
   previous: string;
-  results: T[];
+  results: ApiNamedResource[];
 }
 
-export type IPokemonBulkResult = { name: string, url: string }
-export type IPokemonBulkResponse = PokeApiResourceResponse<IPokemonBulkResult>;
+export interface ApiNamedResource {
+  name: string,
+  url: string
+}

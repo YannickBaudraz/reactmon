@@ -1,10 +1,10 @@
 import React from 'react';
 import PokemonItem from './PokemonItem/PokemonItem';
-import {IPokemonBulkResult} from '../types/poke-api';
+import {ApiNamedResource} from '../types/poke-api';
 import {Link} from 'react-router-dom';
 
 interface PokemonListProps {
-  pokemons: IPokemonBulkResult[];
+  pokemons: ApiNamedResource[];
 }
 
 export default function PokemonList({pokemons}: PokemonListProps) {
@@ -13,7 +13,7 @@ export default function PokemonList({pokemons}: PokemonListProps) {
         <h1>Pokemons</h1>
 
         <div className="grid mx-1 lg:mx-2 gap-3 lg:gap-5 justify-content-center">
-          {pokemons.map((pokemon: IPokemonBulkResult) =>
+          {pokemons.map((pokemon: ApiNamedResource) =>
               <Link to={`/pokemon/${pokemon.url.split('/')[6]}`}
                     key={pokemon.name}
                     className="p-reset"

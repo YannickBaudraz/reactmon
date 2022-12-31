@@ -1,5 +1,5 @@
 import PokemonList from '../components/PokemonList';
-import {IPokemonBulkResult} from '../types/poke-api';
+import {ApiNamedResource} from '../types/poke-api';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonListQuery} from '../queries/pokemon-queries';
@@ -8,8 +8,8 @@ import {ProgressSpinner} from 'primereact/progressspinner';
 import AllPokemonNavBar from '../components/AllPokemonNavbar';
 
 export default function AllPokemon() {
-  const [initialPokemons, setInitialPokemons] = useState<IPokemonBulkResult[]>([]);
-  const [pokemons, setPokemons] = useState<IPokemonBulkResult[]>([]);
+  const [initialPokemons, setInitialPokemons] = useState<ApiNamedResource[]>([]);
+  const [pokemons, setPokemons] = useState<ApiNamedResource[]>([]);
   const {isLoading, isError, data, error} = useQuery(pokemonListQuery);
   const messages = useRef<Messages>(null);
   let content;

@@ -1,4 +1,4 @@
-import {IPokemonBulkResponse} from '../types/poke-api';
+import {ApiResourceList} from '../types/poke-api';
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
 
 export default class PokeApiService {
@@ -10,9 +10,9 @@ export default class PokeApiService {
     });
   }
 
-  public async getAllPokemon(): Promise<AxiosResponse<IPokemonBulkResponse>> {
+  public async getAllPokemon(): Promise<AxiosResponse<ApiResourceList>> {
     const lastPokemonToFetch = `905`;
 
-    return this.axios.get<IPokemonBulkResponse>(`/pokemon?limit=${lastPokemonToFetch}`)
+    return this.axios.get<ApiResourceList>(`/pokemon?limit=${lastPokemonToFetch}`);
   }
 }

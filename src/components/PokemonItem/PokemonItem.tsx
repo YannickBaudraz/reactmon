@@ -1,13 +1,13 @@
 import {Card} from 'primereact/card';
 import React, {useRef, useState} from 'react';
 import './PokemonItem.scss';
-import {IPokemonBulkResult} from '../../types/poke-api';
+import {ApiNamedResource} from '../../types/poke-api';
 import {motion} from 'framer-motion';
 import anime from 'animejs';
 import placeholderSrc from '/pokemon-item-placeholder.png';
 
 interface PokemonItemProps {
-  pokemon: IPokemonBulkResult;
+  pokemon: ApiNamedResource;
 }
 
 export default function PokemonItem({pokemon}: PokemonItemProps) {
