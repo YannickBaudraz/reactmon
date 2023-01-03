@@ -41,12 +41,6 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
             }]
           }}
           options={{
-            plugins: {
-              title: {
-                display: true,
-                text: pokemon.name.capitalize()
-              }
-            },
             interaction: {
               intersect: false,
               mode: 'index',
@@ -55,6 +49,11 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
             scales: {
               r: {
                 min: 0
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
               }
             }
           }}

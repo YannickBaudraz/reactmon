@@ -37,7 +37,6 @@ export function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
             ],
             datasets: [
               {
-                label: pokemon.name,
                 data: [
                   pokemon.stats.hp,
                   pokemon.stats.attack,
@@ -57,10 +56,6 @@ export function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
             plugins: {
               legend: {
                 display: false
-              },
-              title: {
-                display: true,
-                text: `${pokemon.name.capitalize()} stats`
               },
               datalabels: {
                 anchor: 'end',
