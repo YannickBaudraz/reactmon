@@ -1,10 +1,8 @@
-@import 'primeflex/primeflex.min';
-
 td, th {
-  @extend .vertical-align-text-top;
-  @extend .p-2;
+  vertical-align: text-top;
+  padding: 0.5rem;
 }
 
 th {
-  @extend .text-right;
+  text-align: right;
 }

@@ -1,6 +1,6 @@
-import {ApiPokemon, ApiPokemonSpecies, ApiResourceList} from '../types/poke-api';
+import {ApiPokemon, ApiPokemonSpecies, ApiPokemonStats, ApiResourceList} from '../types/poke-api';
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
-import {Pokemon} from '../types/pokemon';
+import {Pokemon, PokemonStats} from '../types/pokemon';
 
 enum PokeApiEndpoints {
   POKEMON = 'pokemon',
@@ -35,6 +35,7 @@ export default class PokeApiService {
       height: apiPokemon.height,
       weight: apiPokemon.weight,
       color: apiPokemonSpecies.color.name,
+      stats: this.getStats(apiPokemon),
       types: this.getTypes(apiPokemon),
       abilities: this.getAbilities(apiPokemon),
       sprites: this.getSprites(apiPokemon),
@@ -57,6 +58,22 @@ export default class PokeApiService {
   private getTypes(apiPokemon: ApiPokemon) {
     return [...apiPokemon.types].sort((a, b) => a.slot - b.slot)
                                 .map(t => ({name: t.type.name}));
+  }
+
+  private getStats(apiPokemon: ApiPokemon): PokemonStats {
+    let statsMap: Record<ApiPokemonStats['stat']['name'], keyof PokemonStats> = {
+      hp: 'hp',
+      attack: 'attack',
+      defense: 'defense',
+      'special-attack': 'specialAttack',
+      'special-defense': 'specialDefense',
+      speed: 'speed'
+    };
+
+    return apiPokemon.stats.reduce((stats, stat) => {
+      stats[statsMap[stat.stat.name]] = stat.base_stat;
+      return stats;
+    }, {} as PokemonStats);
   }
 
   private getAbilities(apiPokemon: ApiPokemon) {
