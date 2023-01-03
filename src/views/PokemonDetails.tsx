@@ -3,9 +3,10 @@ import {useQuery} from '@tanstack/react-query';
 import {pokemonQuery} from '../queries/pokemon-queries';
 import {Params, useParams} from 'react-router-dom';
 import Loader from '../components/Loader';
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
 import {AnimatedSvg} from '../components/AnimatedSvg';
+import {PokemonBasicInfo} from '../components/PokemonBasicInfo';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
@@ -24,23 +25,27 @@ export default function PokemonDetails() {
     }
 
     if (isError) {
-      return <div>Error: {(error as Error).message}</div>;
+      return (
+          <div className="grid">
+            <Messages ref={messages} className="col-10 col-offset-1"/>
+          </div>
+      );
     }
 
     return <>
+      <h1 className="text-center">{pokemon?.name.capitalize()}</h1>
       <div className="grid">
-        <div className="col-3"></div>
+        <div className="col-4 m-auto w-fit">
+          <PokemonBasicInfo pokemon={pokemon}/>
+        </div>
 
-        <div className="col-6">
+        <div className="col-4">
           <div className="flex justify-content-center">
-            <AnimatedSvg svgUrl={pokemon.sprites?.svg}/>
-          </div>
-          <div className="flex justify-content-center">
-            <h1>{pokemon.name.capitalize()}</h1>
+            <AnimatedSvg svgUrl={pokemon.sprites?.svg} scale={1.5}/>
           </div>
         </div>
 
-        <div className="col-3"></div>
+        <div className="col-4"></div>
       </div>
     </>;
   })();
