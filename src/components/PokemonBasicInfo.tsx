@@ -26,6 +26,10 @@ export function PokemonBasicInfo({pokemon}: { pokemon: Pokemon }) {
             <th className="text-right">Abilities</th>
             <td>{pokemon?.abilities.map(ability => ability.name?.capitalize()).join(', ')}</td>
           </tr>
+          <tr>
+            <th className="text-right">Types</th>
+            <td>{pokemon?.types.map(type => type.name?.capitalize()).join(', ')}</td>
+          </tr>
           </tbody>
         </table>
       </>

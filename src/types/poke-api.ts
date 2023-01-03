@@ -15,8 +15,14 @@ export interface ApiPokemon {
   name: string;
   height: number;
   weight: number;
+  types: ApiPokemonType[];
   abilities: ApiPokemonAbility[];
   sprites: ApiPokemonSprites;
+}
+
+export interface ApiPokemonType {
+  slot: number;
+  type: ApiNamedResource;
 }
 
 export interface ApiPokemonAbility {

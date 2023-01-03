@@ -35,6 +35,7 @@ export default class PokeApiService {
       height: apiPokemon.height,
       weight: apiPokemon.weight,
       color: apiPokemonSpecies.color.name,
+      types: this.getTypes(apiPokemon),
       abilities: this.getAbilities(apiPokemon),
       sprites: this.getSprites(apiPokemon)
     }));
@@ -50,6 +51,11 @@ export default class PokeApiService {
     const pokemonSpeciesUrl = `/${PokeApiEndpoints.POKEMON_SPECIES}/${id}`;
 
     return this.axios.get<ApiPokemonSpecies>(pokemonSpeciesUrl).then(response => response.data);
+  }
+
+  private getTypes(apiPokemon: ApiPokemon) {
+    return [...apiPokemon.types].sort((a, b) => a.slot - b.slot)
+                                .map(t => ({name: t.type.name}));
   }
 
   private getAbilities(apiPokemon: ApiPokemon) {
