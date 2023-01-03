@@ -15,7 +15,14 @@ export interface ApiPokemon {
   name: string;
   height: number;
   weight: number;
+  abilities: ApiPokemonAbility[];
   sprites: ApiPokemonSprites;
+}
+
+export interface ApiPokemonAbility {
+  ability: ApiNamedResource;
+  'is_hidden': boolean;
+  slot: number;
 }
 
 export interface ApiPokemonSprites {
@@ -26,7 +33,7 @@ export interface ApiPokemonSprites {
     dream_world: {
       front_default: string;
     }
-  }
+  };
 }
 
 export interface ApiPokemonSpecies {
