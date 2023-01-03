@@ -4,7 +4,7 @@ export interface Svg {
   width: string | NullUndefined;
   height: string | NullUndefined;
   viewBox: string | NullUndefined;
-  paths: { paths: string; id: string; fill: string }[];
+  paths: { definition: string; id: string; fill: string }[];
 }
 
 export async function getSvgFromUrl(url: string): Promise<Svg> {
@@ -23,7 +23,7 @@ export async function getSvgFromUrl(url: string): Promise<Svg> {
       const paths = path.getAttribute('d') || '';
       const fill = path.getAttribute('fill') || '';
       const id = `${index}-${paths}`;
-      return {paths, fill, id};
+      return {definition: paths, fill, id};
     })
   };
 }

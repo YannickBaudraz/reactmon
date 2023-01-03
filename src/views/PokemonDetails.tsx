@@ -1,11 +1,12 @@
-import PokemonDetailsNavBar from '../components/PokemonDetailsNavBar';
+import PokemonDetailsNavBar from '../components/PokemonDetailsNavBar/PokemonDetailsNavBar';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonQuery} from '../queries/pokemon-queries';
 import {Params, useParams} from 'react-router-dom';
 import Loader from '../components/Loader';
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
 import {AnimatedSvg} from '../components/AnimatedSvg';
+import {PokemonBasicInfo} from '../components/PokemonBasicInfo/PokemonBasicInfo';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
@@ -24,23 +25,33 @@ export default function PokemonDetails() {
     }
 
     if (isError) {
-      return <div>Error: {(error as Error).message}</div>;
+      return (
+          <div className="grid">
+            <Messages ref={messages} className="col-10 col-offset-1"/>
+          </div>
+      );
     }
 
     return <>
-      <div className="grid">
-        <div className="col-3"></div>
+      <h1 className="text-center font-semibold" style={{letterSpacing: '.5rem'}}>
+        {pokemon?.name.toUpperCase()}
+      </h1>
 
-        <div className="col-6">
+      <div className="grid">
+        <div className="col-4 w-2 m-auto">
+          <PokemonBasicInfo pokemon={pokemon}/>
+        </div>
+
+        <div className="col-4">
           <div className="flex justify-content-center">
-            <AnimatedSvg svgUrl={pokemon.sprites?.svg}/>
-          </div>
-          <div className="flex justify-content-center">
-            <h1>{pokemon.name.capitalize()}</h1>
+            {pokemon?.sprites?.svg
+                ? <AnimatedSvg svgUrl={pokemon.sprites?.svg} scale={1.5}/>
+                : <img src={pokemon?.sprites?.official} alt={pokemon?.name}/>
+            }
           </div>
         </div>
 
-        <div className="col-3"></div>
+        <div className="col-4"></div>
       </div>
     </>;
   })();

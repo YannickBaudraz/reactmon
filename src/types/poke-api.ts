@@ -15,7 +15,20 @@ export interface ApiPokemon {
   name: string;
   height: number;
   weight: number;
+  types: ApiPokemonType[];
+  abilities: ApiPokemonAbility[];
   sprites: ApiPokemonSprites;
+}
+
+export interface ApiPokemonType {
+  slot: number;
+  type: ApiNamedResource;
+}
+
+export interface ApiPokemonAbility {
+  ability: ApiNamedResource;
+  'is_hidden': boolean;
+  slot: number;
 }
 
 export interface ApiPokemonSprites {
@@ -26,11 +39,16 @@ export interface ApiPokemonSprites {
     dream_world: {
       front_default: string;
     }
-  }
+  };
 }
 
 export interface ApiPokemonSpecies {
   id: number;
   name: string;
   color: ApiNamedResource;
+  varieties: ApiPokemonVariety[];
+}
+
+export interface ApiPokemonVariety {
+  pokemon: ApiNamedResource;
 }

@@ -14,16 +14,14 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    (async () => {
-      setSvg(await getSvgFromUrl(svgUrl));
-    })();
+    (async () => setSvg(await getSvgFromUrl(svgUrl)))();
   }, []);
 
   useEffect(() => {
     if (svgRef.current && svg) {
       svgRef.current.classList.remove('hidden');
       const paths = svgRef.current.querySelectorAll('path');
-      const duration = 2000;
+      const duration = 1000;
       anime({
         targets: paths,
         strokeDashoffset: [anime.setDashoffset, 0],
@@ -34,7 +32,7 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
         ],
         fill: [
           {value: Color('white').alpha(0).toString(), duration: 0},
-          {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 2}
+          {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 1.25}
         ],
         easing: 'easeInOutSine'
       });
@@ -51,17 +49,16 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
           className={className}
       >
         <g>
-          {svg?.paths.map(path => {
-            return (
-                <path
-                    key={path.id}
-                    d={path.paths}
-                    fill="none"
-                    data-fill={path.fill}
-                    preserveAspectRatio="none"
-                />
-            );
-          })}
+          {svg?.paths.map(path => (
+              <path
+                  key={path.id}
+                  d={path.definition}
+                  fill="none"
+                  strokeWidth="0.5"
+                  data-fill={Color(path.fill).desaturate(0.15).hex()}
+                  preserveAspectRatio="none"
+              />
+          ))}
         </g>
       </svg>
   );
