@@ -7,6 +7,7 @@ export interface Pokemon {
   types: PokemonType[];
   sprites: PokemonSprites;
   abilities: PokemonAbility[];
+  forms: PokemonForm[];
 }
 
 export interface PokemonType {
@@ -19,5 +20,10 @@ export interface PokemonSprites {
 }
 
 export interface PokemonAbility {
+  name: string;
+}
+
+export interface PokemonForm {
+  id: number;
   name: string;
 }

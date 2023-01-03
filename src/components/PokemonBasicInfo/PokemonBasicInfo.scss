@@ -1,0 +1,10 @@
+@import 'primeflex/primeflex.min';
+
+td, th {
+  @extend .vertical-align-text-top;
+  @extend .p-2;
+}
+
+th {
+  @extend .text-right;
+}

@@ -46,4 +46,9 @@ export interface ApiPokemonSpecies {
   id: number;
   name: string;
   color: ApiNamedResource;
+  varieties: ApiPokemonVariety[];
+}
+
+export interface ApiPokemonVariety {
+  pokemon: ApiNamedResource;
 }

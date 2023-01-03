@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
 import {AnimatedSvg} from '../components/AnimatedSvg';
-import {PokemonBasicInfo} from '../components/PokemonBasicInfo';
+import {PokemonBasicInfo} from '../components/PokemonBasicInfo/PokemonBasicInfo';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
@@ -33,15 +33,21 @@ export default function PokemonDetails() {
     }
 
     return <>
-      <h1 className="text-center">{pokemon?.name.capitalize()}</h1>
+      <h1 className="text-center font-semibold" style={{letterSpacing: '.5rem'}}>
+        {pokemon?.name.toUpperCase()}
+      </h1>
+
       <div className="grid">
-        <div className="col-4 m-auto w-fit">
+        <div className="col-4 w-2 m-auto">
           <PokemonBasicInfo pokemon={pokemon}/>
         </div>
 
         <div className="col-4">
           <div className="flex justify-content-center">
-            <AnimatedSvg svgUrl={pokemon.sprites?.svg} scale={1.5}/>
+            {pokemon?.sprites?.svg
+                ? <AnimatedSvg svgUrl={pokemon.sprites?.svg} scale={1.5}/>
+                : <img src={pokemon?.sprites?.official} alt={pokemon?.name}/>
+            }
           </div>
         </div>
 

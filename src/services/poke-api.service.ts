@@ -37,7 +37,8 @@ export default class PokeApiService {
       color: apiPokemonSpecies.color.name,
       types: this.getTypes(apiPokemon),
       abilities: this.getAbilities(apiPokemon),
-      sprites: this.getSprites(apiPokemon)
+      sprites: this.getSprites(apiPokemon),
+      forms: this.getForms(apiPokemonSpecies)
     }));
   }
 
@@ -68,5 +69,12 @@ export default class PokeApiService {
       official: apiPokemon.sprites.other['official-artwork'].front_default,
       svg: apiPokemon.sprites.other.dream_world.front_default
     };
+  }
+
+  private getForms(apiPokemonSpecies: ApiPokemonSpecies) {
+    return apiPokemonSpecies.varieties.map(v => ({
+      id: Number(v.pokemon.url.split('/').filter(Boolean).pop()),
+      name: v.pokemon.name
+    }));
   }
 }

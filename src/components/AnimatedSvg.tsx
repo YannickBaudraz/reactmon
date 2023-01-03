@@ -32,7 +32,7 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
         ],
         fill: [
           {value: Color('white').alpha(0).toString(), duration: 0},
-          {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 2}
+          {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 1.25}
         ],
         easing: 'easeInOutSine'
       });
@@ -54,8 +54,8 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
                   key={path.id}
                   d={path.definition}
                   fill="none"
-                  strokeWidth="0.1"
-                  data-fill={Color(path.fill).desaturate(0.1).hex()}
+                  strokeWidth="0.5"
+                  data-fill={Color(path.fill).desaturate(0.15).hex()}
                   preserveAspectRatio="none"
               />
           ))}

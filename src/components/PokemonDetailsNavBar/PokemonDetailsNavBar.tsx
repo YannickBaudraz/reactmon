@@ -11,7 +11,10 @@ interface NavBarProps {
 }
 
 export default function PokemonDetailsNavBar({color}: NavBarProps) {
-  const navBarColor = Color(color).desaturate(0.5).fade(0.35).string();
+  let navBarColor = color === 'white'
+      ? Color('#d5dbe1').darken(.01).string()
+      : Color(color).desaturate(0.33).fade(0.33).string();
+
   return (
       <Menubar
           className="px-3 h-4rem"
@@ -19,7 +22,8 @@ export default function PokemonDetailsNavBar({color}: NavBarProps) {
           style={{
             backgroundColor: navBarColor,
             borderColor: 'transparent',
-            borderRadius: '0'
+            borderRadius: '0',
+            boxShadow: '0 0 40px 8px rgb(0 0 0 / 18%)'
           }}
       />
   );
@@ -35,7 +39,7 @@ function NavBarStart({color}: NavBarProps) {
             style={{
               color: Color(color).isLight()
                   ? Color('black').fade(.35).string()
-                  : 'white',
+                  : 'white'
             }}
         />
       </Link>
