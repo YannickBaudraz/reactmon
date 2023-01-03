@@ -42,7 +42,7 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
 
                 itemImgRef.current!.onload = null;
 
-                const duration = 500;
+                const duration = 250;
                 const timeline = anime.timeline({
                   targets: itemImgRef.current,
                   duration: duration,

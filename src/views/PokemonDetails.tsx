@@ -1,4 +1,4 @@
-import PokemonDetailsNavBar from '../components/PokemonDetailsNavBar';
+import PokemonDetailsNavBar from '../components/PokemonDetailsNavBar/PokemonDetailsNavBar';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonQuery} from '../queries/pokemon-queries';
 import {Params, useParams} from 'react-router-dom';

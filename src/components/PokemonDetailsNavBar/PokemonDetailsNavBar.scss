@@ -1,0 +1,4 @@
+.p-button.p-button-plain:enabled:hover *,
+.p-button.p-button-plain:not(button):not(a):not(.p-disabled):hover * {
+  color: black;
+}
