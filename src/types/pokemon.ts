@@ -4,10 +4,20 @@ export interface Pokemon {
   height: number;
   weight: number;
   color: string;
+  stats: PokemonStats;
   types: PokemonType[];
   sprites: PokemonSprites;
   abilities: PokemonAbility[];
   forms: PokemonForm[];
+}
+
+export interface PokemonStats {
+  hp: number;
+  attack: number;
+  defense: number;
+  specialAttack: number;
+  specialDefense: number;
+  speed: number;
 }
 
 export interface PokemonType {

@@ -5,15 +5,14 @@ import Color from 'color';
 import React from 'react';
 
 import './PokemonDetailsNavBar.scss';
+import {getUIColor} from '../../lib/color';
 
 interface NavBarProps {
   color: string;
 }
 
 export default function PokemonDetailsNavBar({color}: NavBarProps) {
-  let navBarColor = color === 'white'
-      ? Color('#d5dbe1').darken(.01).string()
-      : Color(color).desaturate(0.33).fade(0.33).string();
+  const navBarColor = getUIColor(color);
 
   return (
       <Menubar

@@ -15,9 +15,18 @@ export interface ApiPokemon {
   name: string;
   height: number;
   weight: number;
+  stats: ApiPokemonStats[];
   types: ApiPokemonType[];
   abilities: ApiPokemonAbility[];
   sprites: ApiPokemonSprites;
+}
+
+export interface ApiPokemonStats {
+  base_stat: number;
+  effort: number;
+  stat: ApiNamedResource & {
+    name: 'hp' | 'attack' | 'defense' | 'special-attack' | 'special-defense' | 'speed';
+  };
 }
 
 export interface ApiPokemonType {
@@ -27,7 +36,7 @@ export interface ApiPokemonType {
 
 export interface ApiPokemonAbility {
   ability: ApiNamedResource;
-  'is_hidden': boolean;
+  is_hidden: boolean;
   slot: number;
 }
 

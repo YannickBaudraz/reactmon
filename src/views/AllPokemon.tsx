@@ -1,4 +1,3 @@
-import PokemonList from '../components/PokemonList';
 import {ApiNamedResource} from '../types/poke-api';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
@@ -6,6 +5,8 @@ import {pokemonListQuery} from '../queries/pokemon-queries';
 import {Messages} from 'primereact/messages';
 import AllPokemonNavBar from '../components/AllPokemonNavbar';
 import Loader from '../components/Loader';
+import {Link} from 'react-router-dom';
+import PokemonItem from '../components/PokemonItem/PokemonItem';
 
 export default function AllPokemon() {
   const [initialPokemons, setInitialPokemons] = useState<ApiNamedResource[]>([]);
@@ -41,7 +42,23 @@ export default function AllPokemon() {
           </div>
       );
 
-    return <PokemonList pokemons={pokemons}/>;
+    return <>
+      <h1>Pokemons</h1>
+
+      <div className="grid mx-1 lg:mx-2 gap-3 lg:gap-5 justify-content-center">
+        {pokemons.map((pokemon: ApiNamedResource) =>
+            <Link to={`/pokemon/${pokemon.url.split('/')[6]}`}
+                  key={pokemon.name}
+                  className="p-reset"
+            >
+              <PokemonItem
+                  pokemon={pokemon}
+                  key={pokemon.name}
+              />
+            </Link>
+        )}
+      </div>
+    </>;
   })();
 
   return (
