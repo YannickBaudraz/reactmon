@@ -7,6 +7,8 @@ enum PokeApiEndpoints {
   POKEMON_SPECIES = 'pokemon-species',
 }
 
+export const LAST_POKEMON_ID = 898;
+
 export default class PokeApiService {
   private readonly axios: AxiosInstance;
 
@@ -17,8 +19,7 @@ export default class PokeApiService {
   }
 
   public async getAllPokemon(): Promise<AxiosResponse<ApiResourceList>> {
-    const lastPokemonToFetch = `905`;
-    const allPokemonUrl = `/${PokeApiEndpoints.POKEMON}?limit=${lastPokemonToFetch}`;
+    const allPokemonUrl = `/${PokeApiEndpoints.POKEMON}?limit=${LAST_POKEMON_ID}`;
 
     return this.axios.get<ApiResourceList>(allPokemonUrl);
   }

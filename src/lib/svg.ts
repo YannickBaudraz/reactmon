@@ -16,8 +16,8 @@ export async function getSvgFromUrl(url: string): Promise<Svg> {
   const pathElements = svgDoc.querySelectorAll('path');
 
   return {
-    width: svg?.getAttribute('width'),
-    height: svg?.getAttribute('height'),
+    width: svg?.getAttribute('width')?.replace('px', ''),
+    height: svg?.getAttribute('height')?.replace('px', ''),
     viewBox: svg?.getAttribute('viewBox'),
     paths: Array.from(pathElements).map((path, index) => {
       const paths = path.getAttribute('d') || '';

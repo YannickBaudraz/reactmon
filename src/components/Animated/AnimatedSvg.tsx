@@ -5,17 +5,16 @@ import Color from 'color';
 
 interface AnimatedSvgProps {
   svgUrl: string;
-  className?: string;
-  scale?: number;
+  containerSize: { height: number, width: number };
 }
 
-export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
+export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
   const [svg, setSvg] = useState<Svg>();
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     (async () => setSvg(await getSvgFromUrl(svgUrl)))();
-  }, []);
+  }, [svgUrl]);
 
   useEffect(() => {
     if (svgRef.current && svg) {
@@ -29,20 +28,18 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
   return (
       <svg
           ref={svgRef}
-          width={parseFloat(svg.width as string) * scale}
-          height={parseFloat(svg.height as string) * scale}
-          viewBox={svg?.viewBox as string}
-          className={className}
+          height={containerSize.height * 0.9}
+          width={containerSize.width * 0.9}
+          viewBox={`0 0 ${svg.width} ${svg.height}`}
       >
-        <g>
+        <g fill="none"
+           strokeWidth="0.5"
+        >
           {svg?.paths.map(path => (
               <path
                   key={path.id}
                   d={path.definition}
-                  fill="none"
-                  strokeWidth="0.5"
                   data-fill={Color(path.fill).desaturate(0.15).hex()}
-                  preserveAspectRatio="none"
               />
           ))}
         </g>
