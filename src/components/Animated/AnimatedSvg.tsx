@@ -1,5 +1,5 @@
 import {useEffect, useRef, useState} from 'react';
-import {getSvgFromUrl, Svg} from '../lib/svg';
+import {getSvgFromUrl, Svg} from '../../lib/svg';
 import anime from 'animejs';
 import Color from 'color';
 
@@ -20,26 +20,12 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
   useEffect(() => {
     if (svgRef.current && svg) {
       svgRef.current.classList.remove('hidden');
-      const paths = svgRef.current.querySelectorAll('path');
-      const duration = 1000;
-      anime({
-        targets: paths,
-        strokeDashoffset: [anime.setDashoffset, 0],
-        duration: duration,
-        stroke: [
-          'none',
-          (el: any) => el.getAttribute('data-fill')
-        ],
-        fill: [
-          {value: Color('white').alpha(0).toString(), duration: 0},
-          {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 1.25}
-        ],
-        easing: 'easeInOutSine'
-      });
+      animate(svgRef.current.querySelectorAll('path'));
     }
   }, [svg]);
 
   if (!svg) return null;
+
   return (
       <svg
           ref={svgRef}
@@ -62,4 +48,23 @@ export function AnimatedSvg({svgUrl, className, scale = 1}: AnimatedSvgProps) {
         </g>
       </svg>
   );
+}
+
+function animate(paths: NodeListOf<SVGPathElement>) {
+  const duration = 1000;
+
+  anime({
+    targets: paths,
+    strokeDashoffset: [anime.setDashoffset, 0],
+    duration: duration,
+    stroke: [
+      'none',
+      (el: any) => el.getAttribute('data-fill')
+    ],
+    fill: [
+      {value: Color('white').alpha(0).toString(), duration: 0},
+      {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 1.25}
+    ],
+    easing: 'easeInOutSine'
+  });
 }

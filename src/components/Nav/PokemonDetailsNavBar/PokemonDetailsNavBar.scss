@@ -2,3 +2,9 @@
 .p-button.p-button-plain:not(button):not(a):not(.p-disabled):hover * {
   color: black;
 }
+
+.menu-bar {
+  border-color: transparent;
+  border-radius: 0;
+  box-shadow: 0 0 40px 8px rgb(0 0 0 / 18%);
+}

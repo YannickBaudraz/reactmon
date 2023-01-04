@@ -1,9 +1,9 @@
-import {Chart} from 'primereact/chart';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import Color from 'color';
 import React from 'react';
-import {Pokemon} from '../types/pokemon';
-import {RankingColor} from '../lib/color';
+import {Pokemon} from '../../types/pokemon';
+import {RankingColor} from '../../lib/color';
+import {Bar} from 'react-chartjs-2';
 
 interface PokemonBarChartProps {
   pokemon: Pokemon;
@@ -22,8 +22,7 @@ export function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
   const biggestValue = Math.max(...Object.values(pokemon.stats));
 
   return (
-      <Chart
-          type="bar"
+      <Bar
           className={className}
           plugins={[ChartDataLabels]}
           data={{

@@ -1,11 +1,11 @@
-import PokemonDetailsNavBar from '../components/PokemonDetailsNavBar/PokemonDetailsNavBar';
+import PokemonDetailsNavBar from '../components/Nav/PokemonDetailsNavBar/PokemonDetailsNavBar';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonQuery} from '../queries/pokemon-queries';
 import {Params, useParams} from 'react-router-dom';
 import Loader from '../components/Loader';
 import React, {useEffect, useRef, useState} from 'react';
 import {Messages} from 'primereact/messages';
-import {AnimatedSvg} from '../components/AnimatedSvg';
+import {AnimatedSvg} from '../components/Animated/AnimatedSvg';
 import {PokemonBasicInfo} from '../components/PokemonBasicInfo/PokemonBasicInfo';
 import {PokemonStats} from '../components/PokemonStats';
 
@@ -57,7 +57,7 @@ export default function PokemonDetails() {
           <div className="flex justify-content-center h-full">
             {pokemon?.sprites?.svg
                 ? <AnimatedSvg className="my-auto" svgUrl={pokemon.sprites?.svg} scale={1.5}/>
-                : <img src={pokemon?.sprites?.official} alt={pokemon?.name}/>
+                : <img src={pokemon?.sprites?.official} alt={`${pokemon?.name} image`}/>
             }
           </div>
         </div>

@@ -5,7 +5,7 @@ import Color from 'color';
 import React from 'react';
 
 import './PokemonDetailsNavBar.scss';
-import {getUIColor} from '../../lib/color';
+import {getUIColor} from '../../../lib/color';
 
 interface NavBarProps {
   color: string;
@@ -16,19 +16,14 @@ export default function PokemonDetailsNavBar({color}: NavBarProps) {
 
   return (
       <Menubar
-          className="px-3 h-4rem"
+          className="menu-bar px-3 h-4rem"
           start={<NavBarStart color={navBarColor}/>}
-          style={{
-            backgroundColor: navBarColor,
-            borderColor: 'transparent',
-            borderRadius: '0',
-            boxShadow: '0 0 40px 8px rgb(0 0 0 / 18%)'
-          }}
+          style={{backgroundColor: navBarColor}}
       />
   );
 }
 
-function NavBarStart({color}: NavBarProps) {
+function NavBarStart({color}: Pick<NavBarProps, 'color'>) {
   return (
       <Link className="p-reset" to="/">
         <Button

@@ -1,7 +1,7 @@
 import {Pokemon} from '../types/pokemon';
 import React, {useCallback} from 'react';
-import {PokemonBarChart} from './PokemonBarChart';
-import {PokemonRadarChart} from './PokemonRadarChart';
+import {PokemonBarChart} from './Charts/PokemonBarChart';
+import {PokemonRadarChart} from './Charts/PokemonRadarChart';
 import {ToggleButton, ToggleButtonChangeParams} from 'primereact/togglebutton';
 
 export function PokemonStats({pokemon}: { pokemon: Pokemon }) {

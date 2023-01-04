@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonListQuery} from '../queries/pokemon-queries';
 import {Messages} from 'primereact/messages';
-import AllPokemonNavBar from '../components/AllPokemonNavbar';
+import AllPokemonNavBar from '../components/Nav/AllPokemonNavbar';
 import Loader from '../components/Loader';
 import {Link} from 'react-router-dom';
 import PokemonItem from '../components/PokemonItem/PokemonItem';
