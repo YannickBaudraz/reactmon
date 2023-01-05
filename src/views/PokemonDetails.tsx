@@ -5,8 +5,8 @@ import {Params, useParams} from 'react-router-dom';
 import Loader from '../components/Loader';
 import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
-import {PokemonHero} from '../components/PokemonHero/PokemonHero';
-import {PokemonTcgSection} from '../components/PokemonTcgSection';
+import {PokemonHero} from '../components/sections/PokemonHero/PokemonHero';
+import {PokemonTcgSection} from '../components/sections/PokemonTcgSection/PokemonTcgSection';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();

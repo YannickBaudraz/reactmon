@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Pokemon} from '../../types/pokemon';
+import {Pokemon} from '../../../types/pokemon';
 import {PokemonHeader} from './PokemonHeader';
 import {PokemonInfo} from './PokemonInfo';
 

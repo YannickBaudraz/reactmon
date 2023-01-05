@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
-import {Pokemon} from '../../types/pokemon';
-import {PokemonTitle} from '../PokemonTitle';
-import {LAST_POKEMON_ID} from '../../services/poke-api.service';
-import {PokemonThemedButton} from '../PokemonThemedButton';
+import {Pokemon} from '../../../types/pokemon';
+import {PokemonTitle} from '../../PokemonTitle';
+import {LAST_POKEMON_ID} from '../../../services/poke-api.service';
+import {PokemonThemedButton} from '../../PokemonThemedButton';
 
 export function PokemonHeader({pokemon}: { pokemon: Pokemon }) {
   return (

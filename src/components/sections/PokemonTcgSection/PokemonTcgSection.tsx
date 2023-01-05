@@ -1,12 +1,12 @@
-import {Pokemon} from '../types/pokemon';
+import {Pokemon} from '../../../types/pokemon';
 import {useQuery} from '@tanstack/react-query';
-import {cardsByPokemonName} from '../queries/tcg-queries';
-import Loader from './Loader';
+import {cardsByPokemonName} from '../../../queries/tcg-queries';
+import Loader from '../../Loader';
 import {Toast} from 'primereact/toast';
-import {useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {AxiosError} from 'axios';
-import {ApiErrorResponse} from '../types/tcg-api';
-import {Image} from 'primereact/image';
+import {ApiErrorResponse} from '../../../types/tcg-api';
+import {AnimatedImage} from '../../Animated/AnimatedImage/AnimatedImage';
 
 interface PokemonTcgSectionProps {
   pokemon: Pokemon;
@@ -17,6 +17,8 @@ export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+
     if (toast.current && isError) {
       const axiosError = error as AxiosError<ApiErrorResponse>;
       const message = axiosError.response?.data.error.message || axiosError.message;
@@ -33,16 +35,19 @@ export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
   if (isError) return <Toast ref={toast}/>;
 
   return <>
-    <div>
-      {cards?.map(card => <div key={card.id}>
-        <Image
-            src={card.images.small}
-            zoomSrc={card.images.large}
-            alt={card.name}
-            preview
-            downloadable
-        />
-      </div>)}
+    <div className="grid col-8 col-offset-2 align-items-center">
+      {cards?.map(card => (
+          <div
+              key={card.id}
+              className="col-3 text-center"
+          >
+            <AnimatedImage
+                src={card.images.small}
+                srcZoom={card.images.large}
+                alt={`${card.name} - ${card.id}`}
+            />
+          </div>
+      ))}
     </div>
   </>;
 }
