@@ -5,10 +5,12 @@ import Loader from '../../Loader';
 import {Toast} from 'primereact/toast';
 import React, {useEffect, useRef} from 'react';
 import {AxiosError} from 'axios';
-import {ApiErrorResponse} from '../../../types/tcg-api';
-import {AnimatedImage} from '../../Animated/AnimatedImage/AnimatedImage';
+import {ApiCard, ApiErrorResponse} from '../../../types/tcg-api';
 import {motion} from 'framer-motion';
 import LazyLoad from 'react-lazyload';
+import {AnimatableImage} from '../../Animated/AnimatableImage/AnimatableImage';
+
+const MotionImage = motion(AnimatableImage);
 
 interface PokemonTcgSectionProps {
   pokemon: Pokemon;
@@ -19,8 +21,6 @@ export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
   const toast = useRef<Toast>(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     if (toast.current && isError) {
       const axiosError = error as AxiosError<ApiErrorResponse>;
       const message = axiosError.response?.data.error.message || axiosError.message;
@@ -36,39 +36,62 @@ export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
   if (isLoading) return <Loader/>;
   if (isError) return <Toast ref={toast}/>;
 
-  const MotionAnimatedImage = motion(AnimatedImage);
-
+  const numberOfCardByColumn = 6;
   return <>
-    <div className="grid col-8 col-offset-2 align-items-center">
+    <div className="grid col-10 col-offset-1 align-items-center">
       {cards?.map((card, index) => (
-          <motion.div
+          <AnimatedPokemonTCG
               key={card.id}
-              className="col-3 text-center"
-              initial="offscreen"
-              whileInView="onscreen"
-              viewport={{once: true, amount: .33}}
-          >
-            <LazyLoad height={400} once>
-              <MotionAnimatedImage
-                  src={card.images.small}
-                  srcZoom={card.images.large}
-                  alt={`${card.name} - ${card.id}`}
-                  variants={{
-                    offscreen: {y: 500},
-                    onscreen: {
-                      y: 0,
-                      transition: {
-                        type: 'spring',
-                        bounce: .3,
-                        duration: .5,
-                        delay: index % 4 * .1
-                      }
-                    }
-                  }}
-              />
-            </LazyLoad>
-          </motion.div>
+              card={card}
+              className={`col-${12 / numberOfCardByColumn}`}
+              positionInColumn={index % numberOfCardByColumn}
+          />
       ))}
     </div>
   </>;
+}
+
+interface AnimatedPokemonTCGProps {
+  card: ApiCard;
+  positionInColumn: number;
+  className: string;
+}
+
+function AnimatedPokemonTCG({card, positionInColumn, className}: AnimatedPokemonTCGProps) {
+  const variants = {
+    offScreen: {
+      y: 300
+    },
+    onScreen: {
+      y: 0,
+      transition: {
+        type: 'spring',
+        bounce: .3,
+        duration: .5,
+        delay: positionInColumn * .1
+      },
+      transitionEnd: {
+        opacity: undefined
+      }
+    }
+  };
+
+  return (
+      <motion.div
+          key={card.id}
+          className={className}
+          initial="offScreen"
+          whileInView="onScreen"
+          viewport={{once: true, amount: .33}}
+      >
+        <LazyLoad height="100%" offset={300} once>
+          <MotionImage
+              src={card.images.small}
+              srcZoom={card.images.large}
+              alt={`${card.name} - ${card.id}`}
+              variants={variants}
+          />
+        </LazyLoad>
+      </motion.div>
+  );
 }
