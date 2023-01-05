@@ -8,6 +8,7 @@ import {AxiosError} from 'axios';
 import {ApiErrorResponse} from '../../../types/tcg-api';
 import {AnimatedImage} from '../../Animated/AnimatedImage/AnimatedImage';
 import {motion} from 'framer-motion';
+import LazyLoad from 'react-lazyload';
 
 interface PokemonTcgSectionProps {
   pokemon: Pokemon;
@@ -47,23 +48,25 @@ export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
               whileInView="onscreen"
               viewport={{once: true, amount: .33}}
           >
-            <MotionAnimatedImage
-                src={card.images.small}
-                srcZoom={card.images.large}
-                alt={`${card.name} - ${card.id}`}
-                variants={{
-                  offscreen: {y: 500},
-                  onscreen: {
-                    y: 0,
-                    transition: {
-                      type: 'spring',
-                      bounce: .3,
-                      duration: .5,
-                      delay: index % 4 * .1
+            <LazyLoad height={400} once>
+              <MotionAnimatedImage
+                  src={card.images.small}
+                  srcZoom={card.images.large}
+                  alt={`${card.name} - ${card.id}`}
+                  variants={{
+                    offscreen: {y: 500},
+                    onscreen: {
+                      y: 0,
+                      transition: {
+                        type: 'spring',
+                        bounce: .3,
+                        duration: .5,
+                        delay: index % 4 * .1
+                      }
                     }
-                  }
-                }}
-            />
+                  }}
+              />
+            </LazyLoad>
           </motion.div>
       ))}
     </div>

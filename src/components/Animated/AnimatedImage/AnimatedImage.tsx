@@ -28,13 +28,13 @@ interface AnimatedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   srcZoom: string;
 }
 
-export const AnimatedImage = forwardRef((props: AnimatedImageProps, ref: React.Ref<HTMLImageElement>) => {
+export const AnimatedImage = forwardRef<HTMLImageElement, AnimatedImageProps>((props, ref) => {
   const [isOpen, setOpen] = useState(false);
 
   useDomEvent(useRef(window), 'scroll', () => isOpen && setOpen(false));
 
   return (
-      <div className={`image-container ${isOpen ? 'open' : ''}`}>
+      <div ref={ref} className={`image-container ${isOpen ? 'open' : ''}`}>
         <motion.div
             animate={divAnimation[isOpen ? 'open' : 'closed']}
             transition={transition}
