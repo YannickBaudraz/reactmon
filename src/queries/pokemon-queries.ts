@@ -7,7 +7,7 @@ export const pokemonListQuery = {
   queryFn: () => pokeApiService.getAllPokemon().then((response) => response.data)
 };
 
-export const pokemonQuery = (id: number) => ({
+export const pokemonByIdQuery = (id: number) => ({
   queryKey: ['pokemon', id],
   queryFn: () => pokeApiService.getPokemonById(id).then((response) => response)
 });

@@ -1,15 +1,16 @@
 import PokemonDetailsNavBar from '../components/Nav/PokemonDetailsNavBar/PokemonDetailsNavBar';
 import {useQuery} from '@tanstack/react-query';
-import {pokemonQuery} from '../queries/pokemon-queries';
+import {pokemonByIdQuery} from '../queries/pokemon-queries';
 import {Params, useParams} from 'react-router-dom';
 import Loader from '../components/Loader';
 import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
 import {PokemonHero} from '../components/PokemonHero/PokemonHero';
+import {PokemonTgcSection} from '../components/PokemonTgcSection';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
-  const {isLoading, isError, data: pokemon, error} = useQuery(pokemonQuery(Number(id)));
+  const {isLoading, isError, data: pokemon, error} = useQuery(pokemonByIdQuery(Number(id)));
   const messages = useRef<Messages>(null);
 
   useEffect(() => {
@@ -32,7 +33,10 @@ export default function PokemonDetails() {
     }
 
     return (
-        <PokemonHero pokemon={pokemon}/>
+        <>
+          <PokemonHero pokemon={pokemon}/>
+          <PokemonTgcSection pokemon={pokemon}/>
+        </>
     );
   })();
 
