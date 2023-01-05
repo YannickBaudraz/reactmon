@@ -9,7 +9,14 @@ import chartJsRegister from './chart-js.register';
 
 chartJsRegister();
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60 * 24, // 1 day
+      staleTime: 1000 * 60 * 60 * 24, // 1 day
+    }
+  }
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
