@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
 import {PokemonHero} from '../components/PokemonHero/PokemonHero';
-import {PokemonTgcSection} from '../components/PokemonTgcSection';
+import {PokemonTcgSection} from '../components/PokemonTcgSection';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
@@ -35,7 +35,7 @@ export default function PokemonDetails() {
     return (
         <>
           <PokemonHero pokemon={pokemon}/>
-          <PokemonTgcSection pokemon={pokemon}/>
+          <PokemonTcgSection pokemon={pokemon}/>
         </>
     );
   })();

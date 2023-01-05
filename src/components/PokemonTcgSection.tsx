@@ -6,12 +6,13 @@ import {Toast} from 'primereact/toast';
 import {useEffect, useRef} from 'react';
 import {AxiosError} from 'axios';
 import {ApiErrorResponse} from '../types/tcg-api';
+import {Image} from 'primereact/image';
 
-interface PokemonTgcSectionProps {
+interface PokemonTcgSectionProps {
   pokemon: Pokemon;
 }
 
-export function PokemonTgcSection({pokemon}: PokemonTgcSectionProps) {
+export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
   const {isLoading, isError, data: cards, error} = useQuery(cardsByPokemonName(pokemon.name));
   const toast = useRef<Toast>(null);
 
@@ -34,7 +35,13 @@ export function PokemonTgcSection({pokemon}: PokemonTgcSectionProps) {
   return <>
     <div>
       {cards?.map(card => <div key={card.id}>
-        <img src={card.images.small} alt={card.name}/>
+        <Image
+            src={card.images.small}
+            zoomSrc={card.images.large}
+            alt={card.name}
+            preview
+            downloadable
+        />
       </div>)}
     </div>
   </>;
