@@ -7,6 +7,7 @@ import React, {useEffect, useRef} from 'react';
 import {AxiosError} from 'axios';
 import {ApiErrorResponse} from '../../../types/tcg-api';
 import {AnimatedImage} from '../../Animated/AnimatedImage/AnimatedImage';
+import {motion} from 'framer-motion';
 
 interface PokemonTcgSectionProps {
   pokemon: Pokemon;
@@ -34,19 +35,36 @@ export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
   if (isLoading) return <Loader/>;
   if (isError) return <Toast ref={toast}/>;
 
+  const MotionAnimatedImage = motion(AnimatedImage);
+
   return <>
     <div className="grid col-8 col-offset-2 align-items-center">
-      {cards?.map(card => (
-          <div
+      {cards?.map((card, index) => (
+          <motion.div
               key={card.id}
               className="col-3 text-center"
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{once: true, amount: .33}}
           >
-            <AnimatedImage
+            <MotionAnimatedImage
                 src={card.images.small}
                 srcZoom={card.images.large}
                 alt={`${card.name} - ${card.id}`}
+                variants={{
+                  offscreen: {y: 500},
+                  onscreen: {
+                    y: 0,
+                    transition: {
+                      type: 'spring',
+                      bounce: .3,
+                      duration: .5,
+                      delay: index % 4 * .1
+                    }
+                  }
+                }}
             />
-          </div>
+          </motion.div>
       ))}
     </div>
   </>;

@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {forwardRef, useRef, useState} from 'react';
 import {motion, TargetAndTransition, Transition, useDomEvent} from 'framer-motion';
 import './AnimatedImage.scss';
 
@@ -28,7 +28,7 @@ interface AnimatedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   srcZoom: string;
 }
 
-export function AnimatedImage({src, ...props}: AnimatedImageProps) {
+export const AnimatedImage = forwardRef((props: AnimatedImageProps, ref: React.Ref<HTMLImageElement>) => {
   const [isOpen, setOpen] = useState(false);
 
   useDomEvent(useRef(window), 'scroll', () => isOpen && setOpen(false));
@@ -42,15 +42,16 @@ export function AnimatedImage({src, ...props}: AnimatedImageProps) {
             onClick={() => setOpen(false)}
         />
         <motion.img
+            ref={ref}
             className="shadow-5"
             animate={imgAnimation[isOpen ? 'open' : 'closed']}
             src={props.srcZoom}
             alt={props.alt}
             onClick={() => setOpen(!isOpen)}
             transition={transition}
-            whileHover={{scale: 1.05}}
+            whileHover={{scale: isOpen ? 1 : 1.1}}
             layout
         />
       </div>
   );
-}
+});
