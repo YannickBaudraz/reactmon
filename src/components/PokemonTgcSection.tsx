@@ -1,6 +1,11 @@
 import {Pokemon} from '../types/pokemon';
 import {useQuery} from '@tanstack/react-query';
 import {cardsByPokemonName} from '../queries/tcg-queries';
+import Loader from './Loader';
+import {Toast} from 'primereact/toast';
+import {useEffect, useRef} from 'react';
+import {AxiosError} from 'axios';
+import {ApiErrorResponse} from '../types/tcg-api';
 
 interface PokemonTgcSectionProps {
   pokemon: Pokemon;
@@ -8,22 +13,29 @@ interface PokemonTgcSectionProps {
 
 export function PokemonTgcSection({pokemon}: PokemonTgcSectionProps) {
   const {isLoading, isError, data: cards, error} = useQuery(cardsByPokemonName(pokemon.name));
+  const toast = useRef<Toast>(null);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (toast.current && isError) {
+      const axiosError = error as AxiosError<ApiErrorResponse>;
+      const message = axiosError.response?.data.error.message || axiosError.message;
+      // Because the toast has no animation without a timeout
+      setTimeout(() => toast.current?.show({
+        severity: 'error',
+        summary: 'Error',
+        detail: message
+      }), 1);
+    }
+  }, [isError]);
 
-  if (isError) {
-    return <div>Error: {(error as Error).message}</div>;
-  }
+  if (isLoading) return <Loader/>;
+  if (isError) return <Toast ref={toast}/>;
 
-  return (
-      <div>
-        {cards.map(card => (
-            <div key={card.id}>
-              <img src={card.images.small} alt={card.name}/>
-            </div>
-        ))}
-      </div>
-  );
+  return <>
+    <div>
+      {cards?.map(card => <div key={card.id}>
+        <img src={card.images.small} alt={card.name}/>
+      </div>)}
+    </div>
+  </>;
 }
