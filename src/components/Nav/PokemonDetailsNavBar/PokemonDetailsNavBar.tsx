@@ -16,7 +16,7 @@ export default function PokemonDetailsNavBar({color}: NavBarProps) {
 
   return (
       <Menubar
-          className="menu-bar px-3 h-4rem"
+          className="top-bar px-3 h-4rem"
           start={<NavBarStart color={navBarColor}/>}
           style={{backgroundColor: navBarColor}}
       />

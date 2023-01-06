@@ -10,8 +10,8 @@ interface PokemonThemedButtonProps extends Pick<ButtonProps, 'icon' | 'label' | 
 export function PokemonThemedButton({color, ...props}: PokemonThemedButtonProps) {
   const uiColor = getUIColor(color);
   const buttonColor = Color(uiColor);
-  const hoverColor = buttonColor.darken(0.2);
-  const activeColor = hoverColor.darken(0.2);
+  const hoverColor = buttonColor.darken(.15);
+  const activeColor = hoverColor.darken(.15);
 
   const boxShadow: string = '0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12)';
 

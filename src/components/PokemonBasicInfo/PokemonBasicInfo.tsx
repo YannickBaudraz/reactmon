@@ -10,7 +10,7 @@ export function PokemonBasicInfo({pokemon}: { pokemon: Pokemon }) {
           <tbody>
           <tr>
             <th>ID</th>
-            <td>{pokemon?.id}</td>
+            <td>#{pokemon?.id}</td>
           </tr>
           <tr>
             <th>Name</th>

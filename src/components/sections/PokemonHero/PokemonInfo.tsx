@@ -1,8 +1,8 @@
-import {PokemonBasicInfo} from '../PokemonBasicInfo/PokemonBasicInfo';
-import {AnimatedSvg} from '../Animated/AnimatedSvg';
-import {PokemonStats} from '../PokemonStats';
+import {PokemonBasicInfo} from '../../PokemonBasicInfo/PokemonBasicInfo';
+import {AnimatedSvg} from '../../Animated/AnimatedSvg';
+import {PokemonStats} from '../../PokemonStats';
 import React, {useRef} from 'react';
-import {Pokemon} from '../../types/pokemon';
+import {Pokemon} from '../../../types/pokemon';
 
 export function PokemonInfo({pokemon}: { pokemon: Pokemon }) {
   const imageContainerRef = useRef<HTMLDivElement>(null);

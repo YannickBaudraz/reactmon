@@ -1,15 +1,16 @@
 import PokemonDetailsNavBar from '../components/Nav/PokemonDetailsNavBar/PokemonDetailsNavBar';
 import {useQuery} from '@tanstack/react-query';
-import {pokemonQuery} from '../queries/pokemon-queries';
+import {pokemonByIdQuery} from '../queries/pokemon-queries';
 import {Params, useParams} from 'react-router-dom';
 import Loader from '../components/Loader';
 import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
-import {PokemonHero} from '../components/PokemonHero/PokemonHero';
+import {PokemonHero} from '../components/sections/PokemonHero/PokemonHero';
+import {PokemonTcgSection} from '../components/sections/PokemonTcgSection/PokemonTcgSection';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
-  const {isLoading, isError, data: pokemon, error} = useQuery(pokemonQuery(Number(id)));
+  const {isLoading, isError, data: pokemon, error} = useQuery(pokemonByIdQuery(Number(id)));
   const messages = useRef<Messages>(null);
 
   useEffect(() => {
@@ -31,18 +32,17 @@ export default function PokemonDetails() {
       );
     }
 
-    return (
-        <PokemonHero pokemon={pokemon}/>
-    );
+    return <>
+      <PokemonHero pokemon={pokemon}/>
+      <PokemonTcgSection pokemon={pokemon}/>
+    </>;
   })();
 
-  return (
-      <>
-        <PokemonDetailsNavBar color={pokemon?.color ?? 'grey'}/>
+  return <>
+    <PokemonDetailsNavBar color={pokemon?.color ?? 'grey'}/>
 
-        <div className="px-5">
-          {content}
-        </div>
-      </>
-  );
+    <div className="px-5">
+      {content}
+    </div>
+  </>;
 }
