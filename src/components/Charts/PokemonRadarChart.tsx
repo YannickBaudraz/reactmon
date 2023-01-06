@@ -11,6 +11,8 @@ interface PokemonRadarChartProps {
 
 export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) {
   const uiColor = getUIColor(pokemon.color);
+  const colorObject = Color(uiColor);
+  const colorLightness: number = colorObject.lightness() > 80 ? 80 : colorObject.lightness();
 
   const dataset: ChartDataset<'radar', number[]> = {
     label: pokemon.name,
@@ -22,10 +24,8 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
       pokemon.stats.specialAttack,
       pokemon.stats.attack
     ],
-    backgroundColor: Color(uiColor).fade(.1).toString(),
-    showLine: false,
-    pointRadius: 0,
-    pointHoverRadius: 0
+    backgroundColor: Color(uiColor).fade(.25).lightness(colorLightness).toString(),
+    borderWidth: 0,
   };
 
   return (
@@ -42,8 +42,23 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
             },
             scales: {
               r: {
-                min: 0
+                min: 0,
+                ticks: {
+                  stepSize: 20,
+                }
               }
+            },
+            elements: {
+              line: {
+                borderCapStyle: 'round',
+                borderJoinStyle: 'round',
+                hoverBorderJoinStyle: 'round',
+                hoverBorderCapStyle: 'round',
+              },
+              point: {
+                radius: 0,
+                hoverRadius: 0,
+              },
             }
           }}
       />

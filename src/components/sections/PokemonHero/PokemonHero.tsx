@@ -5,13 +5,11 @@ import {PokemonInfo} from './PokemonInfo';
 
 export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
   return (
-      <div className="mt-7 flex flex-column justify-content-center"
+      <div className="flex flex-column justify-content-around"
            style={{height: 'calc(100vh - 4rem)'}}
       >
         <PokemonHeader pokemon={pokemon}/>
-        <div style={{marginTop: '10rem'}}>
-          <PokemonInfo pokemon={pokemon}/>
-        </div>
+        <PokemonInfo pokemon={pokemon}/>
       </div>
   );
 }

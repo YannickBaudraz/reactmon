@@ -1,10 +1,9 @@
-type NullUndefined = null | undefined;
-
 export interface Svg {
-  width: string | NullUndefined;
-  height: string | NullUndefined;
-  viewBox: string | NullUndefined;
-  paths: { definition: string; id: string; fill: string }[];
+  width?: string;
+  height?: string;
+  viewBox?: string;
+  g: { transform?: string };
+  paths: { definition: string; id: string; fill?: string }[];
 }
 
 export async function getSvgFromUrl(url: string): Promise<Svg> {
@@ -13,12 +12,14 @@ export async function getSvgFromUrl(url: string): Promise<Svg> {
   const parser = new DOMParser();
   const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
   const svg = svgDoc.querySelector('svg');
+  const g = svgDoc.querySelector('g');
   const pathElements = svgDoc.querySelectorAll('path');
 
   return {
     width: svg?.getAttribute('width')?.replace('px', ''),
     height: svg?.getAttribute('height')?.replace('px', ''),
-    viewBox: svg?.getAttribute('viewBox'),
+    viewBox: svg?.getAttribute('viewBox') || undefined,
+    g: {transform: g?.getAttribute('transform') ?? undefined},
     paths: Array.from(pathElements).map((path, index) => {
       const paths = path.getAttribute('d') || '';
       const fill = path.getAttribute('fill') || '';

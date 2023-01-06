@@ -6,7 +6,7 @@ import Loader from '../components/Loader';
 import React, {useEffect, useRef} from 'react';
 import {Messages} from 'primereact/messages';
 import {PokemonHero} from '../components/sections/PokemonHero/PokemonHero';
-import {PokemonTcgSection} from '../components/sections/PokemonTcgSection/PokemonTcgSection';
+import {PokemonTCGSection} from '../components/sections/PokemonTCGSection/PokemonTCGSection';
 
 export default function PokemonDetails() {
   const {id}: Params = useParams();
@@ -19,30 +19,25 @@ export default function PokemonDetails() {
     });
   }, [error, isLoading, isError]);
 
-  const content = (() => {
-    if (isLoading) {
-      return <Loader/>;
-    }
+  if (isLoading) return (
+      <div className="h-screen flex justify-content-center align-items-center">
+        <Loader/>
+      </div>
+  );
 
-    if (isError) {
-      return (
-          <div className="grid">
-            <Messages ref={messages} className="col-10 col-offset-1"/>
-          </div>
-      );
-    }
-
-    return <>
-      <PokemonHero pokemon={pokemon}/>
-      <PokemonTcgSection pokemon={pokemon}/>
-    </>;
-  })();
+  if (isError) return (
+      <div className="grid">
+        <Messages ref={messages} className="col-10 col-offset-1"/>
+      </div>
+  );
 
   return <>
-    <PokemonDetailsNavBar color={pokemon?.color ?? 'grey'}/>
+    <PokemonDetailsNavBar color={pokemon?.color ?? 'black'}/>
+    <div className="h-4rem"></div>
 
     <div className="px-5">
-      {content}
+      <PokemonHero pokemon={pokemon}/>
+      <PokemonTCGSection pokemon={pokemon}/>
     </div>
   </>;
 }

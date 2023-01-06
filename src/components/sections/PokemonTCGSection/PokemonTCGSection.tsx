@@ -12,11 +12,11 @@ import {AnimatableImage} from '../../Animated/AnimatableImage/AnimatableImage';
 
 const MotionImage = motion(AnimatableImage);
 
-interface PokemonTcgSectionProps {
+interface PokemonTCGSectionProps {
   pokemon: Pokemon;
 }
 
-export function PokemonTcgSection({pokemon}: PokemonTcgSectionProps) {
+export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   const {isLoading, isError, data: cards, error} = useQuery(cardsByPokemonName(pokemon.name));
   const toast = useRef<Toast>(null);
 

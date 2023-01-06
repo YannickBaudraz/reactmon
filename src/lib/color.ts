@@ -12,16 +12,20 @@ export enum RankingColor {
 export function getUIColor(color: string) {
   switch (color) {
     case 'white':
-      return Color('#eff2f3').hex();
+      return '#EFF2F3';
     case 'black':
-      return Color('#1a1a1a').hex();
+      return '#1A1A1A';
     case 'gray':
       return Color(color).lightness(49).hex();
     case 'blue':
       return Color(color).saturationv(40).rotate(-20).hex();
     case 'pink':
-      return Color(color).saturationl(35).white(35).hex()
+      return Color(color).saturationl(35).white(35).hex();
+    case 'yellow':
+      return Color('#BFB040').hex();
+    case 'red':
+      return Color('#F8685E').lightness(65).hex();
     default:
-      return Color(color).saturationv(1).white(35).hex()
+      return Color(color).saturationv(1).white(35).hex();
   }
 }

@@ -8,22 +8,30 @@ export interface NavBarProps {
 }
 
 export default function AllPokemonNavbar({onSearch}: NavBarProps) {
-  return <Menubar className="px-3 h-4rem" start={<NavBarStart/>} end={<NavBarEnd onSearch={onSearch}/>}/>;
+  return (
+      <Menubar
+          className="px-3 h-4rem"
+          start={<NavBarStart/>}
+          end={<NavBarEnd onSearch={onSearch}/>}
+      />
+  );
 }
 
 function NavBarStart() {
-  return <a href="/"><Image src="/pokedex-logo.png" alt="Logo" width="37"/></a>;
+  return <Image src="/pokedex-logo.png" alt="Logo" width="37"/>;
 }
 
 function NavBarEnd({onSearch}: Partial<NavBarProps>) {
-  return <span className="p-input-icon-left">
-    <i className="pi pi-search"/>
-    <InputText
-        placeholder="Search"
-        type="search"
-        className="p-inputtext-sm"
-        onChange={onSearch}
-    />
-  </span>;
+  return <>
+    <span className="p-input-icon-left">
+      <i className="pi pi-search"/>
+      <InputText
+          placeholder="Search"
+          type="search"
+          className="p-inputtext-sm"
+          onChange={onSearch}
+      />
+    </span>
+  </>;
 }
 

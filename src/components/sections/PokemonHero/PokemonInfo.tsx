@@ -19,19 +19,21 @@ export function PokemonInfo({pokemon}: { pokemon: Pokemon }) {
 
   return (
       <div className="grid">
-        <div className="col-4 w-2 m-auto">
+        <div className="col-4 col-offset-1 w-2 my-auto">
           <PokemonBasicInfo pokemon={pokemon}/>
         </div>
 
-        <div className="col-4" ref={imageContainerRef}>
+        <div className="col-4 col-offset-1 flex justify-content-center" ref={imageContainerRef}>
           {pokemon?.sprites?.svg
               ? <AnimatedSvg svgUrl={pokemon.sprites?.svg} containerSize={imageContainerSize}/>
               : <img src={pokemon?.sprites?.official} alt={`${pokemon?.name} image`}/>
           }
         </div>
 
-        <div className="col-4 my-auto px-3">
-          <PokemonStats pokemon={pokemon}/>
+        <div className="col-4 my-auto flex justify-content-center">
+          <div className="w-9">
+            <PokemonStats pokemon={pokemon}/>
+          </div>
         </div>
       </div>
   );

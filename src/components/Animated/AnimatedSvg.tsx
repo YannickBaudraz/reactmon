@@ -28,18 +28,19 @@ export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
   return (
       <svg
           ref={svgRef}
-          height={containerSize.height * 0.9}
           width={containerSize.width * 0.9}
+          height={containerSize.height * 0.9}
           viewBox={`0 0 ${svg.width} ${svg.height}`}
       >
         <g fill="none"
            strokeWidth="0.5"
+           transform={svg.g?.transform}
         >
           {svg?.paths.map(path => (
               <path
                   key={path.id}
                   d={path.definition}
-                  data-fill={Color(path.fill).desaturate(0.15).hex()}
+                  data-fill={Color(path.fill).desaturate(0.5).hex()}
               />
           ))}
         </g>
