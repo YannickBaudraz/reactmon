@@ -2,6 +2,7 @@ import {Pokemon} from '../../types/pokemon';
 import {getUIColor} from '../../lib/color';
 import {Radar} from 'react-chartjs-2';
 import {ChartDataset} from 'chart.js/dist/types';
+import Color from 'color';
 
 interface PokemonRadarChartProps {
   pokemon: Pokemon;
@@ -21,10 +22,10 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
       pokemon.stats.specialAttack,
       pokemon.stats.attack
     ],
-    backgroundColor: uiColor,
+    backgroundColor: Color(uiColor).fade(.1).toString(),
     showLine: false,
     pointRadius: 0,
-    pointHoverRadius: 0,
+    pointHoverRadius: 0
   };
 
   return (
@@ -37,13 +38,13 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
           options={{
             interaction: {
               intersect: false,
-              mode: 'dataset',
+              mode: 'dataset'
             },
             scales: {
               r: {
                 min: 0
               }
-            },
+            }
           }}
       />
   );

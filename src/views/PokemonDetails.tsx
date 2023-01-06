@@ -32,21 +32,17 @@ export default function PokemonDetails() {
       );
     }
 
-    return (
-        <>
-          <PokemonHero pokemon={pokemon}/>
-          <PokemonTcgSection pokemon={pokemon}/>
-        </>
-    );
+    return <>
+      <PokemonHero pokemon={pokemon}/>
+      <PokemonTcgSection pokemon={pokemon}/>
+    </>;
   })();
 
-  return (
-      <>
-        <PokemonDetailsNavBar color={pokemon?.color ?? 'grey'}/>
+  return <>
+    <PokemonDetailsNavBar color={pokemon?.color ?? 'grey'}/>
 
-        <div className="px-5">
-          {content}
-        </div>
-      </>
-  );
+    <div className="px-5">
+      {content}
+    </div>
+  </>;
 }

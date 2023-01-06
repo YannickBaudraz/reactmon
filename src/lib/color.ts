@@ -10,7 +10,18 @@ export enum RankingColor {
 }
 
 export function getUIColor(color: string) {
-  return color === 'white'
-      ? Color('#d5dbe1').darken(.01).string()
-      : Color(color).desaturate(0.33).fade(0.33).string();
+  switch (color) {
+    case 'white':
+      return Color('#eff2f3').hex();
+    case 'black':
+      return Color('#1a1a1a').hex();
+    case 'gray':
+      return Color(color).lightness(49).hex();
+    case 'blue':
+      return Color(color).saturationv(40).rotate(-20).hex();
+    case 'pink':
+      return Color(color).saturationl(35).white(35).hex()
+    default:
+      return Color(color).saturationv(1).white(35).hex()
+  }
 }
