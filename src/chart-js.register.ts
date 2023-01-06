@@ -7,20 +7,20 @@ import {
   LineElement,
   PointElement,
   RadialLinearScale,
-  Title,
   Tooltip
 } from 'chart.js';
 
 export default () => {
   ChartJs.register(
+      // Bar
+      BarElement,
       RadialLinearScale,
       CategoryScale,
       LinearScale,
+      // Radar
       PointElement,
       LineElement,
-      BarElement,
       Filler,
-      Title,
       Tooltip
   );
 }
