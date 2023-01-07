@@ -1,14 +1,16 @@
 import {RouteObject} from 'react-router-dom';
-import AllPokemon from '../views/AllPokemon';
-import PokemonDetails from '../views/PokemonDetails';
+import {lazy} from 'react';
+
+const AllPokemon = lazy(() => import('../views/AllPokemon'));
+const PokemonDetails = lazy(() => import('../views/PokemonDetails'));
 
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <AllPokemon />
+    element: <AllPokemon/>
   },
   {
     path: '/pokemon/:id',
-    element: <PokemonDetails />
+    element: <PokemonDetails/>
   }
 ];

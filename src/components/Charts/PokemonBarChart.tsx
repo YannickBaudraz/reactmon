@@ -53,9 +53,6 @@ export function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
             responsive: true,
             indexAxis: 'y',
             plugins: {
-              legend: {
-                display: false
-              },
               datalabels: {
                 anchor: 'end',
                 align: 'end'

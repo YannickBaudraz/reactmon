@@ -7,7 +7,6 @@ import React, {useEffect, useRef} from 'react';
 import {AxiosError} from 'axios';
 import {ApiCard, ApiErrorResponse} from '../../../types/tcg-api';
 import {motion} from 'framer-motion';
-import LazyLoad from 'react-lazyload';
 import {AnimatableImage} from '../../Animated/AnimatableImage/AnimatableImage';
 
 const MotionImage = motion(AnimatableImage);
@@ -60,38 +59,34 @@ interface AnimatedPokemonTCGProps {
 function AnimatedPokemonTCG({card, positionInColumn, className}: AnimatedPokemonTCGProps) {
   const variants = {
     offScreen: {
-      y: 300
+      y: 300,
+      opacity: 0
     },
     onScreen: {
       y: 0,
+      opacity: 1,
       transition: {
         type: 'spring',
         bounce: .3,
         duration: .5,
         delay: positionInColumn * .1
-      },
-      transitionEnd: {
-        opacity: undefined
       }
     }
   };
 
   return (
       <motion.div
-          key={card.id}
-          className={className}
           initial="offScreen"
           whileInView="onScreen"
-          viewport={{once: true, amount: .33}}
+          viewport={{once: true, amount: .5}}
+          className={className}
       >
-        <LazyLoad height="100%" offset={300} once>
-          <MotionImage
-              src={card.images.small}
-              srcZoom={card.images.large}
-              alt={`${card.name} - ${card.id}`}
-              variants={variants}
-          />
-        </LazyLoad>
+        <MotionImage
+            src={card.images.small}
+            srcZoom={card.images.large}
+            alt={`${card.name} - ${card.id}`}
+            variants={variants}
+        />
       </motion.div>
   );
 }

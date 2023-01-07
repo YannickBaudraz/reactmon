@@ -1,11 +1,25 @@
 import {Link} from 'react-router-dom';
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Pokemon} from '../../../types/pokemon';
 import {PokemonTitle} from '../../PokemonTitle';
 import {LAST_POKEMON_ID} from '../../../services/poke-api.service';
 import {PokemonThemedButton} from '../../PokemonThemedButton';
+import {AnimeTarget} from '../../../types/anime-js';
+import {SetState} from '../../../types/react';
 
-export function PokemonHeader({pokemon}: { pokemon: Pokemon }) {
+interface PokemonHeaderProps {
+  pokemon: Pokemon;
+  setHeaderAnimeTarget?: SetState<AnimeTarget>;
+}
+
+export function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProps) {
+  const titleDivRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!titleDivRef.current) return;
+    setHeaderAnimeTarget?.(titleDivRef.current);
+  }, [pokemon]);
+
   return (
       <div className="grid">
         <div className="col-4 flex align-items-center pl-8">
@@ -20,7 +34,8 @@ export function PokemonHeader({pokemon}: { pokemon: Pokemon }) {
           }
         </div>
 
-        <div className="col-4 flex justify-content-center align-items-center">
+        <div ref={titleDivRef}
+             className="col-4 flex justify-content-center align-items-center">
           <PokemonTitle name={pokemon?.name}/>
         </div>
 

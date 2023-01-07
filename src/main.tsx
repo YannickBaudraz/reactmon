@@ -5,11 +5,10 @@ import {QueryClient} from '@tanstack/react-query';
 import './index.scss';
 import './extensions';
 import Router from './routing/Router';
-import chartJsRegister from './chart-js.register';
 import {createSyncStoragePersister} from '@tanstack/query-sync-storage-persister';
 import {PersistQueryClientProvider} from '@tanstack/react-query-persist-client';
 
-chartJsRegister();
+import('./chart-js.register').then(value => value.default());
 
 const queryClient = new QueryClient({
   defaultOptions: {
