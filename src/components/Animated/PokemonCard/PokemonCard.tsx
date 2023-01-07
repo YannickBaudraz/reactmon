@@ -1,18 +1,19 @@
 import React, {forwardRef} from 'react';
 import {motion} from 'framer-motion';
-import './AnimatableImage.scss';
 import {Image} from 'primereact/image';
+import './PokemonCard.scss';
 
-interface AnimatedImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface PokemonCardProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
   srcZoom: string;
 }
 
-export const AnimatableImage = forwardRef<HTMLImageElement, AnimatedImageProps>((props, ref) => {
+export const PokemonCard = forwardRef<HTMLImageElement, PokemonCardProps>((props, ref) => {
   return (
       <motion.div
           ref={ref}
           whileHover={{scale: 1.05}}
+          whileTap={{scale: .95}}
       >
         <Image
             className="bg-transparent"
