@@ -9,11 +9,16 @@ interface AnimatedSvgProps {
 }
 
 export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
-  const [svg, setSvg] = useState<Svg>();
+  const [svg, setSvg] = useState<Svg | undefined>(undefined);
+  const [currentSvgUrl, setCurrentSvgUrl] = useState<string | undefined>(undefined);
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    (async () => setSvg(await getSvgFromUrl(svgUrl)))();
+    if (svgUrl !== currentSvgUrl) {
+      setSvg(undefined);
+      getSvgFromUrl(svgUrl).then(setSvg);
+      setCurrentSvgUrl(svgUrl);
+    }
   }, [svgUrl]);
 
   useEffect(() => {
@@ -31,12 +36,13 @@ export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
           width={containerSize.width * 0.9}
           height={containerSize.height * 0.9}
           viewBox={`0 0 ${svg.width} ${svg.height}`}
+          key={svgUrl}
       >
         <g fill="none"
            strokeWidth="0.5"
-           transform={svg.g?.transform}
+           transform={svg?.g?.transform}
         >
-          {svg?.paths.map(path => (
+          {svg.paths.map(path => (
               <path
                   key={path.id}
                   d={path.definition}
@@ -64,6 +70,6 @@ function animate(paths: NodeListOf<SVGPathElement>) {
       {value: (el: any) => el.getAttribute('data-fill'), delay: duration * .2}
     ],
     delay: anime.stagger(5, {from: 'center', grid: [paths.length, 10]}),
-    easing: 'easeOutElastic(1.5, .5)'
+    easing: 'easeOutElastic(1.5, .5)',
   });
 }
