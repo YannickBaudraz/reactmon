@@ -25,7 +25,7 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
       pokemon.stats.attack
     ],
     backgroundColor: Color(uiColor).fade(.25).lightness(colorLightness).toString(),
-    borderWidth: 0,
+    borderWidth: 0
   };
 
   return (
@@ -44,7 +44,7 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
               r: {
                 min: 0,
                 ticks: {
-                  stepSize: 20,
+                  stepSize: 20
                 }
               }
             },
@@ -53,12 +53,12 @@ export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) 
                 borderCapStyle: 'round',
                 borderJoinStyle: 'round',
                 hoverBorderJoinStyle: 'round',
-                hoverBorderCapStyle: 'round',
+                hoverBorderCapStyle: 'round'
               },
               point: {
                 radius: 0,
-                hoverRadius: 0,
-              },
+                hoverRadius: 0
+              }
             }
           }}
       />

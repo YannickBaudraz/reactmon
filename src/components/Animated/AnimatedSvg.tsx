@@ -40,7 +40,7 @@ export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
               <path
                   key={path.id}
                   d={path.definition}
-                  data-fill={Color(path.fill).desaturate(0.5).hex()}
+                  data-fill={Color(path.fill).desaturate(.5).hex()}
               />
           ))}
         </g>
@@ -49,20 +49,21 @@ export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
 }
 
 function animate(paths: NodeListOf<SVGPathElement>) {
-  const duration = 1000;
+  const duration = 3500;
 
   anime({
     targets: paths,
-    strokeDashoffset: [anime.setDashoffset, 0],
-    duration: duration,
+    duration,
     stroke: [
       'none',
       (el: any) => el.getAttribute('data-fill')
     ],
+    strokeDashoffset: [anime.setDashoffset, 0],
     fill: [
       {value: Color('white').alpha(0).toString(), duration: 0},
-      {value: (el: any) => el.getAttribute('data-fill'), delay: duration / 1.25}
+      {value: (el: any) => el.getAttribute('data-fill'), delay: duration * .2}
     ],
-    easing: 'easeInOutSine'
+    delay: anime.stagger(5, {from: 'center', grid: [paths.length, 10]}),
+    easing: 'easeOutElastic(1.5, .5)'
   });
 }
