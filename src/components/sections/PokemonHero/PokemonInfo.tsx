@@ -45,7 +45,7 @@ export function PokemonInfo(props: PokemonHeroProps) {
               ? <AnimatedSvg
                   svgUrl={pokemon.sprites?.svg}
                   containerSize={imageContainerSize}
-                  onComplete={onSvgAnimeComplete}
+                  onLookingComplete={onSvgAnimeComplete}
               />
               : <img src={pokemon?.sprites?.official} alt={`${pokemon?.name} image`}/>
           }

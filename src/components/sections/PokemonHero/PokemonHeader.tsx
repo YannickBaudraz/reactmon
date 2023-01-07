@@ -13,10 +13,11 @@ interface PokemonHeaderProps {
 }
 
 export function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProps) {
-  const titleRef = useRef<HTMLDivElement>(null);
+  const titleDivRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setHeaderAnimeTarget?.(titleRef.current);
+    if (!titleDivRef.current) return;
+    setHeaderAnimeTarget?.(titleDivRef.current);
   }, [pokemon]);
 
   return (
@@ -33,7 +34,8 @@ export function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProp
           }
         </div>
 
-        <div ref={titleRef} className="col-4 flex justify-content-center align-items-center">
+        <div ref={titleDivRef}
+             className="col-4 flex justify-content-center align-items-center">
           <PokemonTitle name={pokemon?.name}/>
         </div>
 

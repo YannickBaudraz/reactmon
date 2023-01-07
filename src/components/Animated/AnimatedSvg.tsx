@@ -6,30 +6,33 @@ import Color from 'color';
 interface AnimatedSvgProps {
   svgUrl: string;
   containerSize: { height: number, width: number };
-  onComplete?: () => void;
+  /**
+   * @description Callback when the animation is looking complete
+   */
+  onLookingComplete?: () => void;
 }
 
-export function AnimatedSvg({svgUrl, containerSize, onComplete}: AnimatedSvgProps) {
+export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
   const [svg, setSvg] = useState<Svg | undefined>(undefined);
   const [currentSvgUrl, setCurrentSvgUrl] = useState<string | undefined>(undefined);
   const svgRef = useRef<SVGSVGElement>(null);
-  const [isComplete, setIsComplete] = useState(false);
+  const [isLookingComplete, setIsLookingComplete] = useState(false);
 
   useEffect(() => {
     if (svgUrl !== currentSvgUrl) {
       setSvg(undefined);
-      setIsComplete(false);
+      setIsLookingComplete(false);
       getSvgFromUrl(svgUrl).then(setSvg);
       setCurrentSvgUrl(svgUrl);
     }
   }, [svgUrl]);
 
   useEffect(() => {
-    if (svgRef.current && svg && !isComplete) {
+    if (svgRef.current && svg && !isLookingComplete) {
       svgRef.current.classList.remove('hidden');
       animate(svgRef.current.querySelectorAll('path'));
     }
-  }, [svg, isComplete]);
+  }, [svg, isLookingComplete]);
 
   if (!svg) return null;
 
@@ -75,10 +78,10 @@ export function AnimatedSvg({svgUrl, containerSize, onComplete}: AnimatedSvgProp
     });
 
     const onUpdate = (anim: anime.AnimeInstance) => {
-      setIsComplete(prevIsComplete => {
-        const elasticEasingLookFinished = anim.progress >= 50;
-        if (elasticEasingLookFinished && !prevIsComplete) {
-          onComplete?.();
+      setIsLookingComplete(prevIsComplete => {
+        const isElasticEasingLookFinished = anim.progress >= 50;
+        if (isElasticEasingLookFinished && !prevIsComplete) {
+          onLookingComplete?.();
           return true;
         }
         return prevIsComplete;
