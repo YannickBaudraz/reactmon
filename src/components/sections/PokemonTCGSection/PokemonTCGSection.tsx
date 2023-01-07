@@ -5,15 +5,15 @@ import Loader from '../../Loader';
 import {Toast} from 'primereact/toast';
 import React, {useEffect, useRef} from 'react';
 import {AxiosError} from 'axios';
-import {ApiCard, ApiErrorResponse} from '../../../types/tcg-api';
+import {ApiErrorResponse} from '../../../types/tcg-api';
 import {motion} from 'framer-motion';
-import {AnimatableImage} from '../../Animated/AnimatableImage/AnimatableImage';
-
-const MotionImage = motion(AnimatableImage);
+import {PokemonCard} from '../../Animated/PokemonCard/PokemonCard';
 
 interface PokemonTCGSectionProps {
   pokemon: Pokemon;
 }
+
+const MotionPokemonCard = motion(PokemonCard);
 
 export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   const {isLoading, isError, data: cards, error} = useQuery(cardsByPokemonName(pokemon.name));
@@ -35,58 +35,40 @@ export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   if (isLoading) return <Loader/>;
   if (isError) return <Toast ref={toast}/>;
 
-  const numberOfCardByColumn = 6;
   return <>
     <div className="grid col-10 col-offset-1 align-items-center">
       {cards?.map((card, index) => (
-          <AnimatedPokemonTCG
-              key={card.id}
-              card={card}
-              className={`col-${12 / numberOfCardByColumn}`}
-              positionInColumn={index % numberOfCardByColumn}
-          />
+          <motion.div
+              initial="offScreen"
+              whileInView="onScreen"
+              viewport={{once: true, amount: .4}}
+              className="col-2"
+          >
+            <MotionPokemonCard
+                src={card.images.small}
+                srcZoom={card.images.large}
+                alt={`${card.name} - ${card.id}`}
+                variants={{
+                  offScreen: {
+                    y: 300,
+                    opacity: 0
+                  },
+                  onScreen: {
+                    y: 0,
+                    opacity: 1,
+                    transition: {
+                      y: {
+                        type: 'spring',
+                        duration: .5,
+                        bounce: .3,
+                        delay: index % 6 * 0.1
+                      },
+                    }
+                  }
+                }}
+            />
+          </motion.div>
       ))}
     </div>
   </>;
-}
-
-interface AnimatedPokemonTCGProps {
-  card: ApiCard;
-  positionInColumn: number;
-  className: string;
-}
-
-function AnimatedPokemonTCG({card, positionInColumn, className}: AnimatedPokemonTCGProps) {
-  const variants = {
-    offScreen: {
-      y: 300,
-      opacity: 0
-    },
-    onScreen: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: 'spring',
-        bounce: .3,
-        duration: .5,
-        delay: positionInColumn * .1
-      }
-    }
-  };
-
-  return (
-      <motion.div
-          initial="offScreen"
-          whileInView="onScreen"
-          viewport={{once: true, amount: .5}}
-          className={className}
-      >
-        <MotionImage
-            src={card.images.small}
-            srcZoom={card.images.large}
-            alt={`${card.name} - ${card.id}`}
-            variants={variants}
-        />
-      </motion.div>
-  );
 }
