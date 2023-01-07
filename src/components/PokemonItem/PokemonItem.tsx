@@ -1,44 +1,84 @@
 import {Card} from 'primereact/card';
-import React, {useCallback} from 'react';
+import React, {useRef, useState} from 'react';
 import './PokemonItem.scss';
-import {DivMouseEvent} from '../../types/events';
-import {IPokemonBulkResult} from '../../types/poke-api';
+import {ApiNamedResource} from '../../types/poke-api';
+import {motion} from 'framer-motion';
+import anime from 'animejs';
+import placeholderSrc from '/pokemon-item-placeholder.png';
 
 interface PokemonItemProps {
-  pokemon: IPokemonBulkResult;
+  pokemon: ApiNamedResource;
 }
 
 export default function PokemonItem({pokemon}: PokemonItemProps) {
-  const shadowClassName = 'shadow-5';
-
-  const onMouseOver = useCallback((e: DivMouseEvent) => {
-    e.currentTarget.classList.add(shadowClassName);
-    e.currentTarget.style.cursor = 'pointer';
-  }, [pokemon]);
-
-  const onMouseOut = useCallback((e: DivMouseEvent) => {
-    e.currentTarget.classList.remove(shadowClassName);
-    e.currentTarget.style.cursor = 'default';
-  }, [pokemon]);
-
   const pokemonId = pokemon.url.split('/')[6];
-  const imageSrc = `${import.meta.env.VITE_OFFICIAL_PNG_URL}/${pokemonId}.png`;
+  const spriteSrc = `${import.meta.env.VITE_OFFICIAL_PNG_URL}/${pokemonId}.png`;
+  const imgSize = getImageSizeByViewport();
+
+  const itemImgRef = useRef<HTMLImageElement>(null);
+  const [imgSrc, setImgSrc] = useState(placeholderSrc);
 
   return (
-      <a href="#" className="p-reset">
+      <motion.div
+          whileHover={{
+            scale: 1.05,
+            boxShadow: '3px 3px 10px 5px rgba(0,0,0,0.07)'
+          }}
+      >
         <Card
             title={pokemon.name.capitalize()}
             subTitle={pokemonId}
-            className="pokemon-item m-1 p-2 col max-w-fit"
-            onMouseOver={onMouseOver}
-            onMouseOut={onMouseOut}
+            className="pokemon-item col max-w-fit"
         >
-          <img
-              src={imageSrc}
-              alt={pokemon.name}
-              width="100"
+          <motion.img
+              ref={itemImgRef}
+              src={imgSrc}
+              alt={pokemon.name + ' image'}
+              width={imgSize}
+              height={imgSize}
+              viewport={{once: true}}
+              onViewportEnter={e => {
+                if (!e) return;
+
+                itemImgRef.current!.onload = null;
+
+                const duration = 250;
+                const timeline = anime.timeline({
+                  targets: itemImgRef.current,
+                  duration: duration,
+                  easing: 'easeInOutSine'
+                }).add({
+                  opacity: 0,
+                  duration: duration,
+                  complete: () => {
+                    setImgSrc(spriteSrc);
+                    timeline.pause();
+                  }
+                }).add({
+                  delay: duration / 4,
+                  opacity: 1
+                });
+
+                itemImgRef.current!.onload = () => {
+                  if (itemImgRef.current!.src === spriteSrc) {
+                    timeline.play();
+                  }
+                };
+              }}
           />
         </Card>
-      </a>
+      </motion.div>
   );
+}
+
+function getImageSizeByViewport() {
+  const viewports = {
+    'sm': {innerWidth: 768, size: 135},
+    'md': {innerWidth: 1024, size: 190},
+    'lg': {innerWidth: 1280, size: 225}
+  };
+
+  const size = Object.values(viewports).find(({innerWidth}) => innerWidth >= window.innerWidth)?.size;
+
+  return size || viewports.lg.size;
 }
