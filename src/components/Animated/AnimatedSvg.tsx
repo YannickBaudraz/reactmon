@@ -1,32 +1,35 @@
 import {useEffect, useRef, useState} from 'react';
 import {getSvgFromUrl, Svg} from '../../lib/svg';
-import anime from 'animejs';
+import anime, {AnimeParams} from 'animejs';
 import Color from 'color';
 
 interface AnimatedSvgProps {
   svgUrl: string;
   containerSize: { height: number, width: number };
+  onComplete?: () => void;
 }
 
-export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
+export function AnimatedSvg({svgUrl, containerSize, onComplete}: AnimatedSvgProps) {
   const [svg, setSvg] = useState<Svg | undefined>(undefined);
   const [currentSvgUrl, setCurrentSvgUrl] = useState<string | undefined>(undefined);
   const svgRef = useRef<SVGSVGElement>(null);
+  const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     if (svgUrl !== currentSvgUrl) {
       setSvg(undefined);
+      setIsComplete(false);
       getSvgFromUrl(svgUrl).then(setSvg);
       setCurrentSvgUrl(svgUrl);
     }
   }, [svgUrl]);
 
   useEffect(() => {
-    if (svgRef.current && svg) {
+    if (svgRef.current && svg && !isComplete) {
       svgRef.current.classList.remove('hidden');
       animate(svgRef.current.querySelectorAll('path'));
     }
-  }, [svg]);
+  }, [svg, isComplete]);
 
   if (!svg) return null;
 
@@ -40,7 +43,7 @@ export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
       >
         <g fill="none"
            strokeWidth="0.5"
-           transform={svg?.g?.transform}
+           transform={svg.g?.transform}
         >
           {svg.paths.map(path => (
               <path
@@ -52,24 +55,45 @@ export function AnimatedSvg({svgUrl, containerSize}: AnimatedSvgProps) {
         </g>
       </svg>
   );
-}
 
-function animate(paths: NodeListOf<SVGPathElement>) {
-  const duration = 3500;
+  function animate(paths: NodeListOf<SVGPathElement>) {
+    const totalDuration = 3500;
 
-  anime({
-    targets: paths,
-    duration,
-    stroke: [
+    const strokeFromTo: AnimeParams['stroke'] = [
       'none',
       (el: any) => el.getAttribute('data-fill')
-    ],
-    strokeDashoffset: [anime.setDashoffset, 0],
-    fill: [
+    ];
+
+    const fillFromTo: AnimeParams['fill'] = [
       {value: Color('white').alpha(0).toString(), duration: 0},
-      {value: (el: any) => el.getAttribute('data-fill'), delay: duration * .2}
-    ],
-    delay: anime.stagger(5, {from: 'center', grid: [paths.length, 10]}),
-    easing: 'easeOutElastic(1.5, .5)',
-  });
+      {value: (el: any) => el.getAttribute('data-fill'), delay: totalDuration * .2}
+    ];
+
+    const delayBetweenEachPaths: AnimeParams['delay'] = anime.stagger(5, {
+      grid: [paths.length, 10],
+      from: 'center'
+    });
+
+    const onUpdate = (anim: anime.AnimeInstance) => {
+      setIsComplete(prevIsComplete => {
+        const elasticEasingLookFinished = anim.progress >= 50;
+        if (elasticEasingLookFinished && !prevIsComplete) {
+          onComplete?.();
+          return true;
+        }
+        return prevIsComplete;
+      });
+    };
+
+    anime({
+      targets: paths,
+      duration: totalDuration,
+      stroke: strokeFromTo,
+      strokeDashoffset: [anime.setDashoffset, 0],
+      fill: fillFromTo,
+      delay: delayBetweenEachPaths,
+      easing: 'easeOutElastic(1, .5)',
+      update: onUpdate
+    });
+  }
 }

@@ -10,10 +10,11 @@ interface PokemonHeroProps {
   pokemon: Pokemon;
   setBasicInfoAnimeTarget?: SetState<AnimeTarget>;
   setStatsAnimeTarget?: SetState<AnimeTarget>;
+  onSvgAnimeComplete?: () => void;
 }
 
 export function PokemonInfo(props: PokemonHeroProps) {
-  const {pokemon, setBasicInfoAnimeTarget, setStatsAnimeTarget} = props;
+  const {pokemon, setBasicInfoAnimeTarget, setStatsAnimeTarget, onSvgAnimeComplete} = props;
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const basicInfoDivRef = useRef<HTMLDivElement>(null);
@@ -44,6 +45,7 @@ export function PokemonInfo(props: PokemonHeroProps) {
               ? <AnimatedSvg
                   svgUrl={pokemon.sprites?.svg}
                   containerSize={imageContainerSize}
+                  onComplete={onSvgAnimeComplete}
               />
               : <img src={pokemon?.sprites?.official} alt={`${pokemon?.name} image`}/>
           }
