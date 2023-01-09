@@ -39,6 +39,7 @@ export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
     <div className="grid col-10 col-offset-1 align-items-center">
       {cards?.map((card, index) => (
           <motion.div
+              key={card.id}
               initial="offScreen"
               whileInView="onScreen"
               viewport={{once: true, amount: .4}}

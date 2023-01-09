@@ -5,16 +5,17 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Pokemon} from '../../../types/pokemon';
 import {SetState} from '../../../types/react';
 import {AnimeTarget} from '../../../types/anime-js';
+import {AnimatedImage} from '../../Animated/AnimatedImage';
 
 interface PokemonHeroProps {
   pokemon: Pokemon;
   setBasicInfoAnimeTarget?: SetState<AnimeTarget>;
   setStatsAnimeTarget?: SetState<AnimeTarget>;
-  onSvgAnimeComplete?: () => void;
+  onImageAnimeComplete?: () => void;
 }
 
 export function PokemonInfo(props: PokemonHeroProps) {
-  const {pokemon, setBasicInfoAnimeTarget, setStatsAnimeTarget, onSvgAnimeComplete} = props;
+  const {pokemon, setBasicInfoAnimeTarget, setStatsAnimeTarget, onImageAnimeComplete} = props;
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
   const basicInfoDivRef = useRef<HTMLDivElement>(null);
@@ -45,9 +46,13 @@ export function PokemonInfo(props: PokemonHeroProps) {
               ? <AnimatedSvg
                   svgUrl={pokemon.sprites?.svg}
                   containerSize={imageContainerSize}
-                  onLookingComplete={onSvgAnimeComplete}
+                  onLookingComplete={onImageAnimeComplete}
               />
-              : <img src={pokemon?.sprites?.official} alt={`${pokemon?.name} image`}/>
+              : <AnimatedImage
+                  src={pokemon?.sprites?.official}
+                  alt={`${pokemon?.name} image`}
+                  onAnimeComplete={onImageAnimeComplete}
+              />
           }
         </div>
 
