@@ -3,9 +3,10 @@ import {motion} from 'framer-motion';
 import {Image} from 'primereact/image';
 import './PokemonCard.scss';
 
-interface PokemonCardProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+interface PokemonCardProps {
   src: string;
   srcZoom: string;
+  alt: string;
 }
 
 export const PokemonCard = forwardRef<HTMLImageElement, PokemonCardProps>((props, ref) => {

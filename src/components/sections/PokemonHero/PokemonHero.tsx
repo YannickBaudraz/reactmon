@@ -11,14 +11,15 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
   const [basicInfoAnimeTarget, setBasicInfoAnimeTarget] = useState<AnimeTarget>([]);
   const [statsAnimeTarget, setStatsAnimeTarget] = useState<AnimeTarget>([]);
   const [headerAnimeTarget, setHeaderAnimeTarget] = useState<AnimeTarget>([]);
-  const [onSvgAnimeComplete, setOnSvgAnimeComplete] = useState<() => void>();
+  const [onImageAnimeComplete, setOnImageAnimeComplete] = useState<() => void>();
 
   const timeline = initAnimationTimeline();
 
   useEffect(() => {
     if (!basicInfoAnimeTarget || !statsAnimeTarget || !headerAnimeTarget)
       return;
-    setOnSvgAnimeComplete(() => () => timeline.play());
+
+    setOnImageAnimeComplete(() => () => timeline.play());
   }, [basicInfoAnimeTarget, statsAnimeTarget, headerAnimeTarget]);
 
   return (
@@ -31,7 +32,7 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
             pokemon={pokemon}
             setBasicInfoAnimeTarget={setBasicInfoAnimeTarget}
             setStatsAnimeTarget={setStatsAnimeTarget}
-            onSvgAnimeComplete={onSvgAnimeComplete}
+            onImageAnimeComplete={onImageAnimeComplete}
         />
       </div>
   );
