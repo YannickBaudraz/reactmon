@@ -51,7 +51,7 @@ export function PokemonInfo(props: PokemonHeroProps) {
               : <AnimatedImage
                   src={pokemon?.sprites?.official}
                   alt={`${pokemon?.name} image`}
-                  onImageAnimeComplete={onImageAnimeComplete}
+                  onAnimeComplete={onImageAnimeComplete}
               />
           }
         </div>
