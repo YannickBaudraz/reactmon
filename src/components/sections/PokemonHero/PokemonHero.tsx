@@ -4,7 +4,7 @@ import {PokemonHeader} from './PokemonHeader';
 import {PokemonInfo} from './PokemonInfo';
 import anime from 'animejs';
 import {AnimeTarget} from '../../../types/anime-js';
-import {isLg} from '../../../lib/responsive';
+import {isXl} from '../../../lib/responsive';
 
 export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -27,7 +27,7 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
       <div ref={heroRef}
            className="flex flex-column justify-content-around overflow-x-hidden mt-4 xl:mt-0"
            style={{
-             height: isLg() ? 'calc(100vh - 4rem)' : 'auto',
+             height: isXl() ? 'calc(100vh - 4rem)' : 'auto',
              opacity: 0
            }}
       >
