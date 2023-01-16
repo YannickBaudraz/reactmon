@@ -22,11 +22,12 @@ export function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProp
 
   return (
       <div className="grid">
-        <div className="col-4 flex align-items-center pl-8">
+        <div className="col-6 xl:col
+                        flex align-items-center xl:pl-8">
           {pokemon.id > 1 &&
               <Link to={`/pokemon/${pokemon.id - 1}`}>
                 <PokemonThemedButton
-                    label="Previous"
+                    label="&nbsp;Previous"
                     icon="pi pi-arrow-left"
                     color={pokemon.color}
                 />
@@ -34,22 +35,26 @@ export function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProp
           }
         </div>
 
-        <div ref={titleDivRef}
-             className="col-4 flex justify-content-center align-items-center">
-          <PokemonTitle name={pokemon?.name}/>
-        </div>
-
-        <div className="col-4 flex justify-content-end align-items-center pr-8">
+        <div className="col-6 xl:col xl:flex-order-3
+                        flex justify-content-end align-items-center xl:pr-8"
+        >
           {pokemon.id < LAST_POKEMON_ID &&
               <Link to={`/pokemon/${pokemon.id + 1}`}>
                 <PokemonThemedButton
-                    label="Next"
+                    label="Next&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
                     icon="pi pi-arrow-right"
                     iconPos="right"
                     color={pokemon.color}
                 />
               </Link>
           }
+        </div>
+
+        <div ref={titleDivRef}
+             className="col xl:flex-order-2
+                        flex justify-content-center align-items-center"
+        >
+          <PokemonTitle name={pokemon?.name}/>
         </div>
       </div>
   );

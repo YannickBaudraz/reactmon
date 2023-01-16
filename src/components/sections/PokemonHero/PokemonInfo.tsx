@@ -28,6 +28,10 @@ export function PokemonInfo(props: PokemonHeroProps) {
     setStatsAnimeTarget?.(statsDivRef.current);
 
     if (imageContainerRef.current) {
+      const imageContainerXPosition = imageContainerRef.current.getBoundingClientRect().x;
+      if (imageContainerXPosition < 100)
+        imageContainerRef.current.style.height = `${102 - imageContainerXPosition}vh`;
+
       setImageContainerSize({
         height: imageContainerRef.current.getBoundingClientRect().height,
         width: imageContainerRef.current.getBoundingClientRect().width
@@ -37,11 +41,11 @@ export function PokemonInfo(props: PokemonHeroProps) {
 
   return (
       <div className="grid">
-        <div ref={basicInfoDivRef} className="col-4 col-offset-1 w-2 my-auto">
-          <PokemonBasicInfo pokemon={pokemon}/>
-        </div>
-
-        <div className="col-4 col-offset-1 flex justify-content-center" ref={imageContainerRef}>
+        <div ref={imageContainerRef}
+             className="col-12 flex justify-content-center max-w-full
+                        lg:col-12
+                        xl:flex-order-2 xl:col-4"
+        >
           {pokemon?.sprites?.svg
               ? <AnimatedSvg
                   svgUrl={pokemon.sprites?.svg}
@@ -49,6 +53,8 @@ export function PokemonInfo(props: PokemonHeroProps) {
                   onLookingComplete={onImageAnimeComplete}
               />
               : <AnimatedImage
+                  className="w-full h-full"
+                  style={{objectFit: 'contain'}}
                   src={pokemon?.sprites?.official}
                   alt={`${pokemon?.name} image`}
                   onAnimeComplete={onImageAnimeComplete}
@@ -56,8 +62,18 @@ export function PokemonInfo(props: PokemonHeroProps) {
           }
         </div>
 
-        <div className="col-4 my-auto flex justify-content-center">
-          <div ref={statsDivRef} className="w-9">
+        <div ref={basicInfoDivRef}
+             className="col w-10 col-offset-1 my-auto
+                        lg:w-5 md:col-offset-0 lg:flex lg:justify-content-center
+                        xl:flex-order-1 xl:w-4"
+        >
+          <PokemonBasicInfo pokemon={pokemon}/>
+        </div>
+
+        <div className="col my-auto
+                        xl:col-4 xl:flex-order-3"
+        >
+          <div ref={statsDivRef} className="">
             <PokemonStats pokemon={pokemon}/>
           </div>
         </div>
