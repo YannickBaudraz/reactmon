@@ -4,6 +4,7 @@ import {PokemonHeader} from './PokemonHeader';
 import {PokemonInfo} from './PokemonInfo';
 import anime from 'animejs';
 import {AnimeTarget} from '../../../types/anime-js';
+import {isLg} from '../../../lib/responsive';
 
 export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -13,7 +14,7 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
   const [headerAnimeTarget, setHeaderAnimeTarget] = useState<AnimeTarget>([]);
   const [onImageAnimeComplete, setOnImageAnimeComplete] = useState<() => void>();
 
-  const timeline = initAnimationTimeline();
+  const timeline = getAnimationTimeline();
 
   useEffect(() => {
     if (!basicInfoAnimeTarget || !statsAnimeTarget || !headerAnimeTarget)
@@ -24,8 +25,11 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
 
   return (
       <div ref={heroRef}
-           className="flex flex-column justify-content-around overflow-x-hidden"
-           style={{height: 'calc(100vh - 4rem)', opacity: 0}}
+           className="flex flex-column justify-content-around overflow-x-hidden mt-4 xl:mt-0"
+           style={{
+             height: isLg() ? 'calc(100vh - 4rem)' : 'auto',
+             opacity: 0
+           }}
       >
         <PokemonHeader pokemon={pokemon} setHeaderAnimeTarget={setHeaderAnimeTarget}/>
         <PokemonInfo
@@ -37,14 +41,19 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
       </div>
   );
 
-  function initAnimationTimeline() {
+  function getAnimationTimeline() {
     const infoDuration = 2000;
     const infoEasing: anime.AnimeParams['easing'] = 'easeOutElastic(1, .5)';
     const animeInstance = anime;
     anime.set([basicInfoAnimeTarget, statsAnimeTarget, headerAnimeTarget], {opacity: 0});
     anime.set(heroRef.current, {opacity: 1});
+
     return animeInstance.timeline({
       autoplay: false
+    }).add({
+      targets: headerAnimeTarget,
+      opacity: [0, 1],
+      easing: 'easeOutExpo'
     }).add({
       targets: basicInfoAnimeTarget,
       translateX: ['-10rem', 0],
@@ -57,10 +66,6 @@ export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
       opacity: [0, 1],
       duration: infoDuration,
       easing: infoEasing
-    }, `-=${infoDuration}`).add({
-      targets: headerAnimeTarget,
-      opacity: [0, 1],
-      easing: 'easeOutExpo'
-    }, '-=500');
+    }, `-=${infoDuration}`);
   }
 }

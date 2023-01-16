@@ -63,7 +63,7 @@ export function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
                 grid: {
                   display: false
                 },
-                max: biggestValue + 5
+                max: biggestValue + 10,
               },
               y: {
                 grid: {

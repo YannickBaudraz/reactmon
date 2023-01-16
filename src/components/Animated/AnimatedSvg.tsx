@@ -36,12 +36,14 @@ export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: Animated
 
   if (!svg) return null;
 
+  const viewBox = svg.viewBox?.split(' ').map(Number) ?? [0, 0, 0, 0];
+
   return (
       <svg
           ref={svgRef}
-          width={containerSize.width * 0.9}
-          height={containerSize.height * 0.9}
-          viewBox={`0 0 ${svg.width} ${svg.height}`}
+          width={containerSize.width * .75}
+          height={containerSize.height}
+          viewBox={`${viewBox[0]} ${viewBox[1]} ${svg.width} ${svg.height}`}
           key={svgUrl}
       >
         <g fill="none"
