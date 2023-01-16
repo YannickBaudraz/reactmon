@@ -3,6 +3,8 @@
 
   & .p-card-title {
     font-size: 1rem !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   & .p-card-subtitle {
@@ -17,5 +19,6 @@
 
   & img {
     max-width: 100%;
+    object-fit: contain;
   }
 }

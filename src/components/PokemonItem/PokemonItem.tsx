@@ -43,16 +43,18 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
         </Link>
       </motion.div>
   );
+
   function onViewportEnter(e: IntersectionObserverEntry | null) {
-    if (!e) return;
+    if (!e)
+      return;
 
     itemImgRef.current!.onload = null;
 
-    const duration = 250;
+    const duration = 750;
     const timeline = anime.timeline({
       targets: itemImgRef.current,
       duration: duration,
-      easing: 'easeInOutSine'
+      easing: 'easeInSine'
     }).add({
       opacity: 0,
       duration: duration,
@@ -65,10 +67,7 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
       opacity: 1
     });
 
-    itemImgRef.current!.onload = () => {
-      if (itemImgRef.current!.src === spriteSrc) {
-        timeline.play();
-      }
-    };
+    if (itemImgRef.current)
+      itemImgRef.current.onload = () => itemImgRef.current!.src === spriteSrc && timeline.play();
   }
 }

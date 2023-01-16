@@ -49,7 +49,7 @@ export default function AllPokemon() {
       >
         {pokemons.map(pokemon =>
             <div key={pokemon.name}
-                 className="p-reset col-6 md:col-3 lg:col-2 xl:col-1"
+                 className="p-reset col-6 md:col-3 lg:col-2 xl:col-2 xxl:col-1"
             >
               <PokemonItem
                   pokemon={pokemon}
