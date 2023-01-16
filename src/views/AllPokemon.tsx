@@ -5,7 +5,6 @@ import {pokemonListQuery} from '../queries/pokemon-queries';
 import {Messages} from 'primereact/messages';
 import AllPokemonNavBar from '../components/Nav/AllPokemonNavbar';
 import Loader from '../components/Loader';
-import {Link} from 'react-router-dom';
 import PokemonItem from '../components/PokemonItem/PokemonItem';
 
 export default function AllPokemon() {
@@ -45,29 +44,28 @@ export default function AllPokemon() {
     return <>
       <h1>Pokemons</h1>
 
-      <div className="grid mx-1 lg:mx-2 gap-3 lg:gap-5 justify-content-center">
-        {pokemons.map((pokemon: ApiNamedResource) =>
-            <Link to={`/pokemon/${pokemon.url.split('/')[6]}`}
-                  key={pokemon.name}
-                  className="p-reset"
+      <div className="grid flex-wrap lg:mx-2 justify-content-center"
+           style={{gridAutoRows: '1fr'}}
+      >
+        {pokemons.map(pokemon =>
+            <div key={pokemon.name}
+                 className="p-reset col-6 md:col-3 lg:col-2 xl:col-1"
             >
               <PokemonItem
                   pokemon={pokemon}
                   key={pokemon.name}
               />
-            </Link>
+            </div>
         )}
       </div>
     </>;
   })();
 
-  return (
-      <>
-        <AllPokemonNavBar onSearch={onSearch}/>
+  return <>
+    <AllPokemonNavBar onSearch={onSearch}/>
 
-        <div className="px-5">
-          {content}
-        </div>
-      </>
-  );
+    <div className="mx-2 sm:mx-3 md:mx-5">
+      {content}
+    </div>
+  </>;
 }
