@@ -9,7 +9,7 @@ interface PokemonRadarChartProps {
   className?: string;
 }
 
-export function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) {
+export default function PokemonRadarChart({pokemon, className}: PokemonRadarChartProps) {
   const uiColor = getUIColor(pokemon.color);
   const colorObject = Color(uiColor);
   const colorLightness: number = colorObject.lightness() > 80 ? 80 : colorObject.lightness();

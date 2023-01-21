@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Pokemon} from '../../../types/pokemon';
-import {PokemonHeader} from './PokemonHeader';
-import {PokemonInfo} from './PokemonInfo';
+import PokemonHeader from './PokemonHeader';
+import PokemonInfo from './PokemonInfo';
 import anime from 'animejs';
 import {AnimeTarget} from '../../../types/anime-js';
 import {isXl} from '../../../lib/responsive';
 
-export function PokemonHero({pokemon}: { pokemon: Pokemon }) {
+export default function PokemonHero({pokemon}: { pokemon: Pokemon }) {
   const heroRef = useRef<HTMLDivElement>(null);
 
   const [basicInfoAnimeTarget, setBasicInfoAnimeTarget] = useState<AnimeTarget>([]);

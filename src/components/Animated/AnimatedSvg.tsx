@@ -12,7 +12,7 @@ interface AnimatedSvgProps {
   onLookingComplete?: () => void;
 }
 
-export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
+export default function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
   const [svg, setSvg] = useState<Svg | undefined>(undefined);
   const [currentSvgUrl, setCurrentSvgUrl] = useState<string | undefined>(undefined);
   const svgRef = useRef<SVGSVGElement>(null);

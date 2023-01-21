@@ -10,7 +10,7 @@ interface PokemonBarChartProps {
   className?: string;
 }
 
-export function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
+export default function PokemonBarChart({pokemon, className}: PokemonBarChartProps) {
   const colorsByValue = Object.values(pokemon.stats).map((stat: number) => {
     if (stat < 50) return RankingColor.Horrible;
     if (stat < 70) return RankingColor.Bad;

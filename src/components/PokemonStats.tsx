@@ -1,10 +1,10 @@
 import {Pokemon} from '../types/pokemon';
 import React, {useCallback} from 'react';
-import {PokemonBarChart} from './Charts/PokemonBarChart';
-import {PokemonRadarChart} from './Charts/PokemonRadarChart';
+import PokemonBarChart from './Charts/PokemonBarChart';
+import PokemonRadarChart from './Charts/PokemonRadarChart';
 import {ToggleButton, ToggleButtonChangeParams} from 'primereact/togglebutton';
 
-export function PokemonStats({pokemon}: { pokemon: Pokemon }) {
+export default function PokemonStats({pokemon}: { pokemon: Pokemon }) {
   const [chartType, setChartType] = React.useState<'bar' | 'radar'>('radar');
   const onChange = useCallback((e: ToggleButtonChangeParams) => setChartType(e.value ? 'bar' : 'radar'), []);
   const isBar = chartType === 'bar';

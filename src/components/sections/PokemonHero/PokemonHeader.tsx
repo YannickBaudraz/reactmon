@@ -1,9 +1,9 @@
 import {Link} from 'react-router-dom';
 import React, {useEffect, useRef} from 'react';
 import {Pokemon} from '../../../types/pokemon';
-import {PokemonTitle} from '../../PokemonTitle';
+import PokemonTitle from '../../PokemonTitle';
 import {LAST_POKEMON_ID} from '../../../services/poke-api.service';
-import {PokemonThemedButton} from '../../PokemonThemedButton';
+import PokemonThemedButton from '../../PokemonThemedButton';
 import {AnimeTarget} from '../../../types/anime-js';
 import {SetState} from '../../../types/react';
 
@@ -12,7 +12,7 @@ interface PokemonHeaderProps {
   setHeaderAnimeTarget?: SetState<AnimeTarget>;
 }
 
-export function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProps) {
+export default function PokemonHeader({pokemon, setHeaderAnimeTarget}: PokemonHeaderProps) {
   const titleDivRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

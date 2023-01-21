@@ -5,7 +5,7 @@ import './PokemonBasicInfo.scss';
 import {getUIColor} from '../../lib/color';
 import Color from 'color';
 
-export function PokemonBasicInfo({pokemon}: { pokemon: Pokemon }) {
+export default function PokemonBasicInfo({pokemon}: { pokemon: Pokemon }) {
   const uiColor = Color(getUIColor(pokemon.color)).darken(.15).hex();
 
   return (
