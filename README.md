@@ -67,28 +67,6 @@ To install the app as a PWA, you can use the following steps:
 4. The app will now be installed on your device
 5. You can now launch the app from your device's home screen
 
-## Built With
-
-- [Pnpm](https://pnpm.io/) - Fast, disk space efficient package manager
-- [Vite](https://vitejs.dev/) - A development build tool and runtime for web apps
-- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-- [Anime.js](https://animejs.com/) - A lightweight JavaScript animation library and allowing to
-  create complex animations and use a timeline to animate multiple elements in a sequence
-- [Framer Motion](https://www.framer.com/motion/) - Animation library for React
-- [Primereact](https://primefaces.org/primereact/) - A collection of rich UI components for React
-- [React-query](https://tanstack.com/query/latest) - Hooks for fetching and caching
-  asynchronous data in React
-- [React-router](https://reactrouter.com/) - Routing library for React
-
-## Author
-
-- [Yannick-Baudraz](https://github.com/yannickcpnv) - <yannickbaudrazdev@gmail.com>
-
-## License
-
-This project is not licensed, you can use it as you want, but that's all. I'm just doing this by
-default, but you can still contact me if you want to do something with it.
-
 ## Tools and Libraries
 
 ### Package Management
@@ -150,3 +128,12 @@ default, but you can still contact me if you want to do something with it.
 - [Vercel](https://vercel.com/) - A cloud platform for deploying front-end web apps easily and
   quickly. It can be used with GitHub to automatically deploy the app when pushing to code to the
   repository
+
+## Author
+
+- [Yannick-Baudraz](https://github.com/yannickcpnv) - <yannickbaudrazdev@gmail.com>
+
+## License
+
+This project is not licensed, you can use it as you want, but that's all. I'm just doing this by
+default, but you can still contact me if you want to do something with it.
