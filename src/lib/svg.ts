@@ -1,3 +1,5 @@
+import axios, {AxiosResponse} from 'axios';
+
 export interface Svg {
   width?: string;
   height?: string;
@@ -7,20 +9,21 @@ export interface Svg {
 }
 
 export async function getSvgFromUrl(url: string): Promise<Svg> {
-  const response = await fetch(url);
-  const svgString = await response.text();
-  const parser = new DOMParser();
-  const svgDoc = parser.parseFromString(svgString, 'image/svg+xml');
-  const svg = svgDoc.querySelector('svg');
-  const g = svgDoc.querySelector('g');
-  const pathElements = svgDoc.querySelectorAll('path');
+  const response: AxiosResponse<string> = await axios.get<string>(url);
+  const svg: string = response.data;
+
+  const svgDoc: Document = new DOMParser().parseFromString(svg, 'image/svg+xml');
+
+  const svgEl: SVGSVGElement | null = svgDoc.querySelector('svg');
+  const gEl: SVGGElement | null = svgDoc.querySelector('g');
+  const pathEls: NodeListOf<SVGPathElement> = svgDoc.querySelectorAll('path');
 
   return {
-    width: svg?.getAttribute('width')?.replace('px', ''),
-    height: svg?.getAttribute('height')?.replace('px', ''),
-    viewBox: svg?.getAttribute('viewBox') || undefined,
-    g: {transform: g?.getAttribute('transform') ?? undefined},
-    paths: Array.from(pathElements).map((path, index) => {
+    width: svgEl?.getAttribute('width')?.replace('px', ''),
+    height: svgEl?.getAttribute('height')?.replace('px', ''),
+    viewBox: svgEl?.getAttribute('viewBox') || undefined,
+    g: {transform: gEl?.getAttribute('transform') ?? undefined},
+    paths: Array.from(pathEls).map((path, index) => {
       const paths = path.getAttribute('d') || '';
       const fill = path.getAttribute('fill') || '';
       const id = `${index}-${paths}`;

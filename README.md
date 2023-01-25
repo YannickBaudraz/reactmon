@@ -5,6 +5,9 @@ and view their details, including their abilities, types, forms, and cards from 
 Card Game. This project is for a school course about Advanced Web Animations and was built using
 React, TypeScript, and various other libraries such as PrimeReact, Framer Motion, and Anime.js.
 
+**For a complete documentation of the project, you can go to
+the [documentation](doc/PROJECT_DOCUMENTATION.md) page.**
+
 ## Features
 
 - Browse a list of all known Pokémon (except the 9th generation) and view their details

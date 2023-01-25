@@ -36,8 +36,6 @@ export default function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   if (isLoading) return <Loader/>;
   if (isError) return <Toast ref={toast}/>;
 
-  console.log(getCardByColumns());
-
   return <>
     <div className="grid lg:col-10 lg:col-offset-1 align-items-center">
       {cards?.map((card, index) => (

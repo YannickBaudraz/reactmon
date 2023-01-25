@@ -28,10 +28,8 @@ export default function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: 
   }, [svgUrl]);
 
   useEffect(() => {
-    if (svgRef.current && svg && !isLookingComplete) {
-      svgRef.current.classList.remove('hidden');
+    if (svgRef.current && svg && !isLookingComplete)
       animate(svgRef.current.querySelectorAll('path'));
-    }
   }, [svg, isLookingComplete]);
 
   if (!svg) return null;
