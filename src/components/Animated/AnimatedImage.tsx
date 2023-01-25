@@ -7,7 +7,7 @@ interface AnimatedImageProps extends HTMLMotionProps<'img'>{
   onAnimeComplete?: () => void;
 }
 
-export function AnimatedImage({src, alt, onAnimeComplete, ...props}: AnimatedImageProps) {
+export default function AnimatedImage({src, alt, onAnimeComplete, ...props}: AnimatedImageProps) {
   const animationControls = useAnimationControls();
 
   useEffect(() => {

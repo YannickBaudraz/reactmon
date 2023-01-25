@@ -1,6 +1,7 @@
 import {ApiPokemon, ApiPokemonSpecies, ApiPokemonStats, ApiResourceList} from '../types/poke-api';
 import axios, {AxiosInstance, AxiosResponse} from 'axios';
 import {Pokemon, PokemonStats} from '../types/pokemon';
+import {getIdFromPokeApiURl} from '../lib/pokemon';
 
 enum PokeApiEndpoints {
   POKEMON = 'pokemon',
@@ -91,7 +92,7 @@ export default class PokeApiService {
 
   private getForms(apiPokemonSpecies: ApiPokemonSpecies) {
     return apiPokemonSpecies.varieties.map(v => ({
-      id: Number(v.pokemon.url.split('/').filter(Boolean).pop()),
+      id: getIdFromPokeApiURl(v.pokemon.url),
       name: v.pokemon.name
     }));
   }

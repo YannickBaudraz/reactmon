@@ -12,7 +12,7 @@ interface AnimatedSvgProps {
   onLookingComplete?: () => void;
 }
 
-export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
+export default function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
   const [svg, setSvg] = useState<Svg | undefined>(undefined);
   const [currentSvgUrl, setCurrentSvgUrl] = useState<string | undefined>(undefined);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -28,10 +28,8 @@ export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: Animated
   }, [svgUrl]);
 
   useEffect(() => {
-    if (svgRef.current && svg && !isLookingComplete) {
-      svgRef.current.classList.remove('hidden');
+    if (svgRef.current && svg && !isLookingComplete)
       animate(svgRef.current.querySelectorAll('path'));
-    }
   }, [svg, isLookingComplete]);
 
   if (!svg) return null;

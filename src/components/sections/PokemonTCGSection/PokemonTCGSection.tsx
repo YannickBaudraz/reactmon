@@ -16,7 +16,7 @@ interface PokemonTCGSectionProps {
 
 const MotionPokemonCard = motion(PokemonCard);
 
-export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
+export default function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   const {isLoading, isError, data: cards, error} = useQuery(cardsByPokemonName(pokemon.name));
   const toast = useRef<Toast>(null);
 
@@ -35,8 +35,6 @@ export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
 
   if (isLoading) return <Loader/>;
   if (isError) return <Toast ref={toast}/>;
-
-  console.log(getCardByColumns());
 
   return <>
     <div className="grid lg:col-10 lg:col-offset-1 align-items-center">

@@ -6,13 +6,14 @@ import {motion} from 'framer-motion';
 import anime from 'animejs';
 import placeholderSrc from '/pokemon-item-placeholder.png';
 import {Link} from 'react-router-dom';
+import {getIdFromPokeApiURl} from '../../lib/pokemon';
 
 interface PokemonItemProps {
   pokemon: ApiNamedResource;
 }
 
 export default function PokemonItem({pokemon}: PokemonItemProps) {
-  const pokemonId = pokemon.url.split('/')[6];
+  const pokemonId = getIdFromPokeApiURl(pokemon.url);
   const spriteSrc = `${import.meta.env.VITE_OFFICIAL_PNG_URL}/${pokemonId}.png`;
 
   const itemImgRef = useRef<HTMLImageElement>(null);
@@ -26,7 +27,7 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
             boxShadow: '3px 3px 10px 5px rgba(0,0,0,0.07)'
           }}
       >
-        <Link to={`/pokemon/${pokemon.url.split('/')[6]}`}>
+        <Link to={`/pokemon/${pokemonId}`}>
           <Card
               title={pokemon.name.capitalize()}
               subTitle={pokemonId}
@@ -68,6 +69,6 @@ export default function PokemonItem({pokemon}: PokemonItemProps) {
     });
 
     if (itemImgRef.current)
-      itemImgRef.current.onload = () => itemImgRef.current!.src === spriteSrc && timeline.play();
+      itemImgRef.current.onload = () => itemImgRef.current?.src === spriteSrc && timeline.play();
   }
 }

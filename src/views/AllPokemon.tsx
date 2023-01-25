@@ -1,15 +1,16 @@
 import {ApiNamedResource} from '../types/poke-api';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useQuery} from '@tanstack/react-query';
 import {pokemonListQuery} from '../queries/pokemon-queries';
 import {Messages} from 'primereact/messages';
 import AllPokemonNavBar from '../components/Nav/AllPokemonNavbar';
 import Loader from '../components/Loader';
 import PokemonItem from '../components/PokemonItem/PokemonItem';
+import {getIdFromPokeApiURl} from '../lib/pokemon';
 
 export default function AllPokemon() {
   const [initialPokemons, setInitialPokemons] = useState<ApiNamedResource[]>([]);
-  const [pokemons, setPokemons] = useState<ApiNamedResource[]>([]);
+  const [searchInputValue, setSearchInputValue] = useState('');
   const {isLoading, isError, data, error} = useQuery(pokemonListQuery);
   const messages = useRef<Messages>(null);
 
@@ -19,17 +20,20 @@ export default function AllPokemon() {
     });
     if (data) {
       setInitialPokemons(data.results);
-      setPokemons(data.results);
     }
   }, [error, data, isLoading, isError]);
 
+  const filteredPokemons = useMemo(() => {
+    if (!initialPokemons) return initialPokemons;
+    const searchedValue = new RegExp(searchInputValue.toLowerCase());
+    return initialPokemons.filter(({name, url}) => {
+      return searchedValue.test(name + getIdFromPokeApiURl(url));
+    });
+  }, [initialPokemons, searchInputValue]);
+
   const onSearch = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (initialPokemons) {
-      const searchedValue = e.target.value.toLowerCase();
-      const filteredPokemons = initialPokemons.filter(p => p.name.includes(searchedValue));
-      setPokemons(filteredPokemons);
-    }
-  }, [initialPokemons, pokemons]);
+    setSearchInputValue(e.target.value);
+  }, []);
 
   const content = (() => {
     if (isLoading) return <Loader/>;
@@ -47,13 +51,12 @@ export default function AllPokemon() {
       <div className="grid flex-wrap lg:mx-2 justify-content-center"
            style={{gridAutoRows: '1fr'}}
       >
-        {pokemons.map(pokemon =>
+        {filteredPokemons.map(pokemon =>
             <div key={pokemon.name}
                  className="p-reset col-6 md:col-3 lg:col-2 xl:col-2 xxl:col-1"
             >
               <PokemonItem
                   pokemon={pokemon}
-                  key={pokemon.name}
               />
             </div>
         )}

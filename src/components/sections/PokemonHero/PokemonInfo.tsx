@@ -1,11 +1,11 @@
-import {PokemonBasicInfo} from '../../PokemonBasicInfo/PokemonBasicInfo';
-import {AnimatedSvg} from '../../Animated/AnimatedSvg';
-import {PokemonStats} from '../../PokemonStats';
+import PokemonBasicInfo from '../../PokemonBasicInfo/PokemonBasicInfo';
+import AnimatedSvg from '../../Animated/AnimatedSvg';
+import PokemonStats from '../../PokemonStats';
 import React, {useEffect, useRef, useState} from 'react';
 import {Pokemon} from '../../../types/pokemon';
 import {SetState} from '../../../types/react';
 import {AnimeTarget} from '../../../types/anime-js';
-import {AnimatedImage} from '../../Animated/AnimatedImage';
+import AnimatedImage from '../../Animated/AnimatedImage';
 
 interface PokemonHeroProps {
   pokemon: Pokemon;
@@ -14,7 +14,7 @@ interface PokemonHeroProps {
   onImageAnimeComplete?: () => void;
 }
 
-export function PokemonInfo(props: PokemonHeroProps) {
+export default function PokemonInfo(props: PokemonHeroProps) {
   const {pokemon, setBasicInfoAnimeTarget, setStatsAnimeTarget, onImageAnimeComplete} = props;
 
   const imageContainerRef = useRef<HTMLDivElement>(null);
