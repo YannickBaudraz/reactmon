@@ -1,6 +1,10 @@
 .pokemon-item {
+  height: 100%;
+
   & .p-card-title {
     font-size: 1rem !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   & .p-card-subtitle {
@@ -8,7 +12,13 @@
     color: #aaa !important;
   }
 
-  & .p-card-body {
-    padding: 0.25rem !important;
+  & .p-card-content {
+    display: flex;
+    justify-content: center;
+  }
+
+  & img {
+    max-width: 100%;
+    object-fit: contain;
   }
 }

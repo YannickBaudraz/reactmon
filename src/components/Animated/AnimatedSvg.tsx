@@ -12,7 +12,7 @@ interface AnimatedSvgProps {
   onLookingComplete?: () => void;
 }
 
-export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
+export default function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: AnimatedSvgProps) {
   const [svg, setSvg] = useState<Svg | undefined>(undefined);
   const [currentSvgUrl, setCurrentSvgUrl] = useState<string | undefined>(undefined);
   const svgRef = useRef<SVGSVGElement>(null);
@@ -28,20 +28,20 @@ export function AnimatedSvg({svgUrl, containerSize, onLookingComplete}: Animated
   }, [svgUrl]);
 
   useEffect(() => {
-    if (svgRef.current && svg && !isLookingComplete) {
-      svgRef.current.classList.remove('hidden');
+    if (svgRef.current && svg && !isLookingComplete)
       animate(svgRef.current.querySelectorAll('path'));
-    }
   }, [svg, isLookingComplete]);
 
   if (!svg) return null;
 
+  const viewBox = svg.viewBox?.split(' ').map(Number) ?? [0, 0, 0, 0];
+
   return (
       <svg
           ref={svgRef}
-          width={containerSize.width * 0.9}
-          height={containerSize.height * 0.9}
-          viewBox={`0 0 ${svg.width} ${svg.height}`}
+          width={containerSize.width * .75}
+          height={containerSize.height}
+          viewBox={`${viewBox[0]} ${viewBox[1]} ${svg.width} ${svg.height}`}
           key={svgUrl}
       >
         <g fill="none"

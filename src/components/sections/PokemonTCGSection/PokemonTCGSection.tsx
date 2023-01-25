@@ -8,6 +8,7 @@ import {AxiosError} from 'axios';
 import {ApiErrorResponse} from '../../../types/tcg-api';
 import {motion} from 'framer-motion';
 import {PokemonCard} from '../../Animated/PokemonCard/PokemonCard';
+import {isLg, isMd, isXl} from '../../../lib/responsive';
 
 interface PokemonTCGSectionProps {
   pokemon: Pokemon;
@@ -15,7 +16,7 @@ interface PokemonTCGSectionProps {
 
 const MotionPokemonCard = motion(PokemonCard);
 
-export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
+export default function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   const {isLoading, isError, data: cards, error} = useQuery(cardsByPokemonName(pokemon.name));
   const toast = useRef<Toast>(null);
 
@@ -36,13 +37,14 @@ export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
   if (isError) return <Toast ref={toast}/>;
 
   return <>
-    <div className="grid col-10 col-offset-1 align-items-center">
+    <div className="grid lg:col-10 lg:col-offset-1 align-items-center">
       {cards?.map((card, index) => (
           <motion.div
+              key={card.id}
               initial="offScreen"
               whileInView="onScreen"
               viewport={{once: true, amount: .4}}
-              className="col-2"
+              className="col-6 md:col-4 lg:col-3 xl:col-2"
           >
             <MotionPokemonCard
                 src={card.images.small}
@@ -61,7 +63,7 @@ export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
                         type: 'spring',
                         duration: .5,
                         bounce: .3,
-                        delay: index % 6 * 0.1
+                        delay: index % getCardByColumns() * 0.1
                       },
                     }
                   }
@@ -71,4 +73,17 @@ export function PokemonTCGSection({pokemon}: PokemonTCGSectionProps) {
       ))}
     </div>
   </>;
+
+  function getCardByColumns() {
+    switch (true) {
+      case isXl():
+        return 6;
+      case isLg():
+        return 4;
+      case isMd():
+        return 3;
+      default:
+        return 2;
+    }
+  }
 }
